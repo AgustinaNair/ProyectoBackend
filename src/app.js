@@ -1,5 +1,4 @@
 import express from 'express'
-// import ProductManager from './ProductManager.js'
 import productsRouter from './routes/products.router.js'
 import cartsRoutes from './routes/carts.router.js'
 import { uploader } from './utils.js'
@@ -7,9 +6,9 @@ import { uploader } from './utils.js'
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(express.static('src/public'))
+// app.use(express.static('src/public'))
 
-// app.get('/', (req,res) => res.send('Bienvenidos'))
+app.get('/', (req,res) => res.send('Bienvenidos'))
 app.use('/subir-archivo', uploader.single('myFile'), (req,res)=>{
     if (!req.file){
         return res.send('no se pudo subir el archivo')
@@ -19,7 +18,7 @@ app.use('/subir-archivo', uploader.single('myFile'), (req,res)=>{
 
 app.use('/api/products', productsRouter)
 
-app.use('api/carts', cartsRoutes)
+app.use('/api/carts', cartsRoutes)
 
 app.use((error, req, res, next ) =>{
     console.log(error)
@@ -36,5 +35,6 @@ app.listen(8080, error =>{
     //     "price":"222", 
     //     "thumbnail": "Sin imagen",
     //     "code":"abc12345", 
-    //     "stock":"2545" 
+    //     "stock":"2545",
+    //     "category":"abc"
     //  }

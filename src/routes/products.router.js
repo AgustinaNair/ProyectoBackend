@@ -1,10 +1,10 @@
 import {Router} from 'express'
+import ProductManager from '../manages/ProductManager.js'
 
 const router = Router()
 
-// router.get('/', (req,res) =>{})
-// router.post('/', (req,res) =>{})
 let products =[]
+const {getProduct, addProduct, getProductById, updateProduct, deleteProduct} = new ProductManager('./products.json')
 
 router.get('/', async(req, res) => {
     const {limit} = req.query
@@ -17,13 +17,24 @@ router.get('/:pid', async(req, res) => {
     res.send({status:'success', payload: result})
 })
 
-router.post('/api/products', async(req, res) => {
-    const {title, description, price, thumbnail, code, stock} = req.body
-    if(!title || !description || !price || !thumbnail || !code || !stock) return res.send({status: 'error', error: 'faltan datos'})
+router.post('/', async(req, res) => {
+    const {title, description, price, thumbnail, code, stock, category} = req.body
+    if(!title || !description || !price || !code || !stock || !category) return res.send({status: 'error', error: 'faltan datos'})
     
     const result = await addProduct(req.body)
     res.send({status: 'seccess', payload: result})
 })
+router.put('/:pid', async(req,res)=>{
+    const {pid} = req.params
+    const {title, description, price, thumbnail, code, stock, category} = req.body
+    if(!title || !description || !price || !code || !stock || !category) return res.send({status: 'error', error: 'faltan datos'})
 
-
+    const result = await updateProduct(pid, {title, description, price, thumbnail, code, stock, category})
+    res.send({status:'success', payload: result})
+})
+router.delete('/:pid', async(req,res) =>{
+    const {pid} = req.params
+    const result = await deleteProduct(pid)
+    res.send({status:'success', payload: result})
+})
 export default router

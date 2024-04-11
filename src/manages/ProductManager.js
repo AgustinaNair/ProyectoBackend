@@ -1,6 +1,5 @@
 import fs from 'fs'
 
-const path = './data.txt'
 class ProductManager {
     static id = 1
     
@@ -71,7 +70,7 @@ class ProductManager {
     updateProduct = async(id, update) =>{
         try{
             const products = await this.getProduct()
-            const productUpdate = products.findIndex(producto => producto.id === id);
+            const productUpdate = products.findIndex(producto => producto.id === parseFloat(id));
             if (productUpdate !== -1) {
                 products[productUpdate].title = update.title;
                 products[productUpdate].description = update.description;
@@ -91,7 +90,7 @@ class ProductManager {
     deleteProduct = async(id) =>{ 
         try{
             const products = await this.getProduct()
-            const productIndex = products.findIndex(product => product.id === id);
+            const productIndex = products.findIndex(product => product.id === parseFloat(id));
             if (productIndex !== -1) {
                 products.splice(productIndex, 1); 
                 await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'), 'utf-8'); 
