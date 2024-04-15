@@ -1,0 +1,18 @@
+<main>
+    <h1>Bienvenido {{ apellido}}</h1>
+    <h2>tu user es {{ username }}</h2>
+    <div>
+        {{#if role}}
+            <h2>Se pueden ver los productos</h2>
+            {{#each products}}
+                <div>
+                    <p>Nombre del producto: {{this.nombre}}</p>
+                    <p>id del producto: {{this.id}}</p>
+                </div>
+            {{#/each}}
+        {{else}}
+            <h2>No puede ver los products</h2>
+        {{/if}}
+    </div>
+</main>
+<script src="/js/home.js"></script>
