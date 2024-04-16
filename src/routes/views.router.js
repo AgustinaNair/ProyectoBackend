@@ -31,4 +31,7 @@ router.get('/chat', (req,res)=>{
         styles: 'homeStyles.css'
     })
 })
+router.get('/', (req,res) => {
+    res.render('index',{})
+})
 export default router

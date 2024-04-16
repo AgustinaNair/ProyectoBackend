@@ -1,29 +1,34 @@
 import express from 'express'
 import productsRouter from './routes/products.router.js'
 import cartsRoutes from './routes/carts.router.js'
+import viewsRuter from './routes/products.router.js'
 import { uploader } from './utils.js'
 import { __dirname } from './utils.js'
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io'
+import router from './routes/products.router.js'
 
 const app = express()
+const PORT = process.env.PORT ||8080
 // Guardar en una const el app.listen
-const httpServer =  app.listen(8080, error =>{
+const httpServer =  app.listen(PORT, error =>{
     if(error) console.log(error)
     console.log('server escuchando en el puerto 8080')})
 // Creamos el socket server
+// const io = new Server(httpServer)
 const socketServer= new Server (httpServer)
- 
+// middleware
+// app.use (productSocket(io))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-// app.use(express.static('src/public'))
+app.use(express.static('src/public'))
 
 // app.get('/', (req,res) => res.send('Bienvenidos'))
 // express usa este motor de plantillas
-app.engine('handlebars', handlebars.engine())
+app.engine('hbs', handlebars.engine({ext:'.hbs'}))
 // setiamos la direccion de las vistar / plantillas
 app.set('views', __dirname + '/views')
-app.set('views engine', 'handlebars')
+app.set('views engine', 'hbs')
 
 
 app.use('/subir-archivo', uploader.single('myFile'), (req,res)=>{
@@ -33,11 +38,12 @@ app.use('/subir-archivo', uploader.single('myFile'), (req,res)=>{
     res.send('archivo subido')
 })
 
+app.use('/', viewsRuter)
 app.use('/api/products', productsRouter)
 
 app.use('/api/carts', cartsRoutes)
 
-app.use((error, req, res, next ) =>{
+app.use((error, req, res, next) => {
     console.log(error)
     res.status(500).send('Error 500 en el server')
 })
@@ -58,6 +64,19 @@ socketServer.on('connection', socket =>{
         socketServer.emit('message_server', messages)
     })
 
+})
+let messages= []
+// llamar al manager
+socketServer.on('connection', socket =>{
+    console.log('cliente conectado')
+
+    socket.on('message', data=>{
+        console.log('message data:', data)
+        // gardamos los mensajes
+        messages.push(data)
+        // emitimos los mensajes
+        socketServer.emit('messageLogs', messages)
+    })
 })
 
 
