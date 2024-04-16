@@ -2,27 +2,33 @@ import { Router } from 'express'
 
 const router = Router()
 
+
+
 const products = [
-    {id:1 , nombre: purulo},
-    {id:2 , nombre: purulo},
-    {id:3 , nombre: purulo},
-    {id:4 , nombre: purulo},
-    {id:5 , nombre: purulo},
+    {id: '1', title: 'producto 1', precio: '100'},
+    {id: '2', title: 'producto 2', precio: '101'},
+    {id: '3', title: 'producto 3', precio: '102'},
+    {id: '4', title: 'producto 4', precio: '103'},
+    {id: '5', title: 'producto 5', precio: '104'}    
 ]
+
 const user = {
-    username: 'juancito',
-    apellido: 'perez',
-    role: 'admin'
+    username: 'federicoosandon',
+    nombre: 'fede',
+    apellido: 'osandon',
+    role: 'user'
 }
-//endpoint de una ruta raiz
-router.get ('/', (req, res) => {
-    res.render('home',{
-        user: user.username,
+ 
+// endpoint en ruta raíz
+router.get('/', (req, res)=>{
+    res.render('home', { 
+        username: user.username,
+        nombre: user.nombre,
         apellido: user.apellido,
-        role: user.role ==='admin',
-        title: 'mercado',
+        role: user.role === 'admin',
+        title: 'mercadito || Fede',
         products,
-        styles: 'homeStyles.css'
+        styles: 'homeStyles.css' 
     })
 })
 
@@ -31,7 +37,7 @@ router.get('/chat', (req,res)=>{
         styles: 'homeStyles.css'
     })
 })
-router.get('/', (req,res) => {
-    res.render('index',{})
-})
+// router.get('/', (req,res) => {
+//     res.render('index',{})
+// })
 export default router

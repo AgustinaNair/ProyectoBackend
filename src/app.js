@@ -1,12 +1,12 @@
 import express from 'express'
 import productsRouter from './routes/products.router.js'
 import cartsRoutes from './routes/carts.router.js'
-import viewsRuter from './routes/products.router.js'
-import { uploader } from './utils.js'
+import viewsRuter from './routes/views.router.js'
 import { __dirname } from './utils.js'
+import { uploader } from './utils.js'
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io'
-import router from './routes/products.router.js'
+http
 
 const app = express()
 const PORT = process.env.PORT ||8080
@@ -21,7 +21,7 @@ const socketServer= new Server (httpServer)
 // app.use (productSocket(io))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(express.static('src/public'))
+app.use(express.static(__dirname+'/public'))
 
 // app.get('/', (req,res) => res.send('Bienvenidos'))
 // express usa este motor de plantillas
@@ -37,8 +37,8 @@ app.use('/subir-archivo', uploader.single('myFile'), (req,res)=>{
     }
     res.send('archivo subido')
 })
-
 app.use('/', viewsRuter)
+
 app.use('/api/products', productsRouter)
 
 app.use('/api/carts', cartsRoutes)

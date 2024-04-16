@@ -29,6 +29,6 @@ socket.on('messageLogs', data=>{
     let log = document.querySelector('#messageLog')
     let messages =''
     data.array.forEach(message => {
-        messages+= `${message.user} dice: ${message.message}<br>`
+        messages+= `<li>${message.user} dice: ${message.message}<br>`
     });
 })
