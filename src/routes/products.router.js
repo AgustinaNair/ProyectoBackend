@@ -18,10 +18,13 @@ router.get('/:pid', async(req, res) => {
 })
 
 router.post('/', async(req, res) => {
+    console.log(req.body)
     const {title, description, price, thumbnail, code, stock, category} = req.body
     if(!title || !description || !price || !code || !stock || !category) return res.send({status: 'error', error: 'faltan datos'})
     
     const result = await addProduct(req.body)
+
+    req.io.emit('producto-agregado', result)
     res.send({status: 'seccess', payload: result})
 })
 router.put('/:pid', async(req,res)=>{

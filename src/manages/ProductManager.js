@@ -25,7 +25,7 @@ class ProductManager {
         
     addProduct = async product => {
 
-        if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock){
+        if (!product.title || !product.description || !product.price || !product.code || !product.stock){
             throw new Error("Faltan parámetros")     
         } 
         try{

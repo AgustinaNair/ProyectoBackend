@@ -1,4 +1,6 @@
 import { Router } from 'express'
+import ProductManager from '../manages/ProductManager.js'
+const {getProduct} = new ProductManager('./products.json')
 
 const router = Router()
 
@@ -40,4 +42,12 @@ router.get('/chat', (req,res)=>{
 // router.get('/', (req,res) => {
 //     res.render('index',{})
 // })
+router.get('/products', async(req,res )=>{
+// const products = await getProduct()
+// console.log(req.io)
+
+    res.render('products', {
+        
+    })
+})
 export default router

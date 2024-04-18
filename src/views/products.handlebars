@@ -1,0 +1,42 @@
+<div>
+    {{!-- action="/api/products" method="post" --}}
+    <form id="miFormulario">
+        <label for="">Title</label>
+        <input type="text" name="title">
+        <br/>
+        <label for="">Description</label>
+
+        <input type="text" name="description">
+        <br/>
+        <label for="">Price</label>
+
+        <input type="text" name="price">
+        <br/>
+        <label for="">Code</label>
+
+        <input type="text" name="code">
+        <br/>
+        <label for="">Stock</label>
+
+        <input type="text" name="stock">
+        <br/>
+        <label for="">Category</label>
+      
+        <input type="text" name="category">
+        <br/>
+        <button type="submit" id="submit">Agregar producto</button>
+ </form>
+</div>
+<div id="productos">
+
+</div>
+{{!-- {{#if products}}
+    {{#each products}}
+                <div>
+                    <p>Nombre del producto {{this.title}}</p>
+                    <p>Precio del producto {{this.precio}}</p>
+                </div>
+    {{/each}}
+{{/if }} --}}
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/products.js"></script>

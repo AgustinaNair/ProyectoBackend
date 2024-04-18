@@ -4,31 +4,24 @@ import cartsRoutes from './routes/carts.router.js'
 import viewsRuter from './routes/views.router.js'
 import { __dirname } from './utils.js'
 import { uploader } from './utils.js'
-import handlebars from 'express-handlebars'
+import { engine} from 'express-handlebars'
 import { Server } from 'socket.io'
-http
-
+console.log(__dirname )
 const app = express()
 const PORT = process.env.PORT ||8080
 // Guardar en una const el app.listen
-const httpServer =  app.listen(PORT, error =>{
-    if(error) console.log(error)
-    console.log('server escuchando en el puerto 8080')})
-// Creamos el socket server
-// const io = new Server(httpServer)
-const socketServer= new Server (httpServer)
 // middleware
 // app.use (productSocket(io))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(express.static(__dirname+'/public'))
+app.use(express.static('public'))
 
 // app.get('/', (req,res) => res.send('Bienvenidos'))
 // express usa este motor de plantillas
-app.engine('hbs', handlebars.engine({ext:'.hbs'}))
+app.engine('handlebars', engine())
+app.set('view engine', 'handlebars')
 // setiamos la direccion de las vistar / plantillas
-app.set('views', __dirname + '/views')
-app.set('views engine', 'hbs')
+app.set('views', './src/views')
 
 
 app.use('/subir-archivo', uploader.single('myFile'), (req,res)=>{
@@ -36,6 +29,17 @@ app.use('/subir-archivo', uploader.single('myFile'), (req,res)=>{
         return res.send('no se pudo subir el archivo')
     }
     res.send('archivo subido')
+})
+
+const httpServer =  app.listen(PORT, error =>{
+    if(error) console.log(error)
+    console.log('server escuchando en el puerto 8080')})
+// Creamos el socket server
+// const io = new Server(httpServer)
+const socketServer= new Server (httpServer)
+app.use((req,res, next)=>{
+    req.io= socketServer
+    next()
 })
 app.use('/', viewsRuter)
 
@@ -49,9 +53,9 @@ app.use((error, req, res, next) => {
 })
 socketServer.on('connection', socket =>{
     console.log('nuevo cliente conectado')
-
+    
     // socket.on('message', data =>{
-    //     console.log(data)
+        //     console.log(data)
     // })
     // socket.emit('socket_individual', 'este mensaje solo lo debe recibir los socket')
     // socket.broadcast.emit('para-todos-menos-el-actual', 'este ev lo veran todos los  sockets conectados menos el actual')
@@ -80,7 +84,7 @@ socketServer.on('connection', socket =>{
 })
 
 
-    // {
+// {
     //     "title":"producto prueba cambiado",
     //     "description":"Este es un producto cambiado de prueba", 
     //     "price":"222", 
@@ -89,3 +93,4 @@ socketServer.on('connection', socket =>{
     //     "stock":"2545",
     //     "category":"abc"
     //  }
+    
