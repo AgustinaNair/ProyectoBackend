@@ -1,4 +1,5 @@
 import fs from 'fs'
+// const socket = io()
 
 class ProductManager {
     static id = 1
@@ -38,7 +39,7 @@ class ProductManager {
             products.push(product)
             console.log(product)
             await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'), 'utf-8')
-            
+            //  io.emit("server:newnote", product);
              return product
 
         }catch (error) {

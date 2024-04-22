@@ -25,6 +25,7 @@ router.post('/', async(req, res) => {
     const result = await addProduct(req.body)
 
     req.io.emit('producto-agregado', result)
+   
     res.send({status: 'seccess', payload: result})
 })
 router.put('/:pid', async(req,res)=>{

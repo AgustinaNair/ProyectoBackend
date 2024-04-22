@@ -35,10 +35,12 @@ const httpServer =  app.listen(PORT, error =>{
     if(error) console.log(error)
     console.log('server escuchando en el puerto 8080')})
 // Creamos el socket server
-// const io = new Server(httpServer)
-const socketServer= new Server (httpServer)
+const io = new Server(httpServer)
+
+// const socketServer= new Server (httpServer)
+
 app.use((req,res, next)=>{
-    req.io= socketServer
+    req.io= io
     next()
 })
 app.use('/', viewsRuter)
@@ -51,7 +53,7 @@ app.use((error, req, res, next) => {
     console.log(error)
     res.status(500).send('Error 500 en el server')
 })
-socketServer.on('connection', socket =>{
+io.on('connection', socket =>{
     console.log('nuevo cliente conectado')
     
     // socket.on('message', data =>{
@@ -59,19 +61,19 @@ socketServer.on('connection', socket =>{
     // })
     // socket.emit('socket_individual', 'este mensaje solo lo debe recibir los socket')
     // socket.broadcast.emit('para-todos-menos-el-actual', 'este ev lo veran todos los  sockets conectados menos el actual')
-    // socketServer.emit('eventos-para-todos', 'mensaje para todos los socket incluido el actal')
+    // io.emit('eventos-para-todos', 'mensaje para todos los socket incluido el actal')
     const messages =[]
     // enviar mensajes viejos
     socket.on('mensaje_cliente', data =>{
         console.log(data)
         messages.push({id: socket.id, message: data})
-        socketServer.emit('message_server', messages)
+        io.emit('message_server', messages)
     })
 
 })
 let messages= []
 // llamar al manager
-socketServer.on('connection', socket =>{
+io.on('connection', socket =>{
     console.log('cliente conectado')
 
     socket.on('message', data=>{
@@ -79,8 +81,12 @@ socketServer.on('connection', socket =>{
         // gardamos los mensajes
         messages.push(data)
         // emitimos los mensajes
-        socketServer.emit('messageLogs', messages)
+        io.emit('messageLogs', messages)
     })
+
+
+
+
 })
 
 
