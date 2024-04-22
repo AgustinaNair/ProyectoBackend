@@ -34,13 +34,17 @@ socket.on("server:newnote", appendNote);
 socket.on("server:selectednote", (note) => {
   const title = document.getElementById("title");
   const description = document.getElementById("description");
+  const price = document.getElementById("price");
+  const code = document.getElementById("code");
+  const stock = document.getElementById("stock");
+  const category = document.getElementById("caregory");
 
   title.value = note.title;
   description.value = note.description;
-  price.value = note.description;
-  code.value = note.description;
-  stock.value = note.description;
-  category.value = note.description;
+  price.value = note.price;
+  code.value = note.code;
+  stock.value = note.stock;
+  category.value = note.category;
 
   savedId = note.id;
 });

@@ -11,12 +11,15 @@ export default (io) => {
     // Send all messages to the client
     socket.emit("server:loadnotes",  async(req, res) => {
         const result= await getProduct()
+        console.log(result)
         return result
     });
 
-    socket.on("client:newnote", (newNote) => {
-        // addProduct
-    //   io.emit("server:newnote", note);
+    socket.on("client:newnote", async(newNote) => {
+      const result = await addProduct(newNote)
+      io.emit("server:newnote", result);
+      console.log(result)
+      return result
     });
 
     socket.on("client:deletenote", (noteId) => {
