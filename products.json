@@ -1,40 +1,47 @@
 [
 	{
-		"title": "producto1",
-		"description": "Este es un producto 1",
-		"price": "222",
-		"thumbnail": "imagencita",
-		"code": "abc12345",
-		"stock": "2545",
-		"category": "abc",
-		"id": 1
+		"title": "Nuevo test 3",
+		"description": "Otra vez",
+		"price": "60",
+		"code": "BCA",
+		"stock": "10",
+		"category": "12313",
+		"id": 5
 	},
 	{
-		"title": "producto 2",
-		"description": "Este es un producto 2",
-		"price": "222",
-		"thumbnail": "imagencita",
-		"code": "abc12345",
-		"stock": "2545",
-		"category": "abc",
-		"id": 2
+		"title": "Test",
+		"description": "test123123",
+		"price": "15",
+		"code": "AAAA",
+		"stock": "test1",
+		"category": "12313",
+		"id": 6
 	},
 	{
-		"title": "nota con server",
-		"description": "o",
-		"price": " no",
-		"code": "lo",
-		"stock": "se",
-		"category": "je",
-		"id": 3
+		"title": "Test",
+		"description": "test123123",
+		"price": "15",
+		"code": "AAAA",
+		"stock": "test1",
+		"category": "12313",
+		"id": 7
 	},
 	{
-		"title": " nota de ui",
-		"description": "l",
-		"price": "l",
-		"code": "l",
-		"stock": "l",
-		"category": "l",
-		"id": 4
+		"title": "Test",
+		"description": "Prueba de evento",
+		"price": "15",
+		"code": "BBBB",
+		"stock": "test0001",
+		"category": "12313",
+		"id": 10
+	},
+	{
+		"title": "Test",
+		"description": "Prueba de evento",
+		"price": "15",
+		"code": "BBBB",
+		"stock": "test0001",
+		"category": "12313",
+		"id": 11
 	}
 ]
