@@ -26,7 +26,7 @@ router.post('/', async(req, res) => {
 
     req.io.emit('producto-agregado', result)
    
-    res.send({status: 'seccess', payload: result})
+    res.send({status: 'success', payload: result})
 })
 router.put('/:pid', async(req,res)=>{
     const {pid} = req.params
@@ -34,11 +34,13 @@ router.put('/:pid', async(req,res)=>{
     if(!title || !description || !price || !code || !stock || !category) return res.send({status: 'error', error: 'faltan datos'})
 
     const result = await updateProduct(pid, {title, description, price, thumbnail, code, stock, category})
+    req.io.emit('producto-actualizado', result)
     res.send({status:'success', payload: result})
 })
 router.delete('/:pid', async(req,res) =>{
     const {pid} = req.params
     const result = await deleteProduct(pid)
+    req.io.emit('producto-eliminado', result)
     res.send({status:'success', payload: result})
 })
 export default router

@@ -1,40 +1,29 @@
 [
 	{
-		"title": "producto1",
-		"description": "Este es un producto 1",
-		"price": "222",
-		"thumbnail": "imagencita",
-		"code": "abc12345",
-		"stock": "2545",
-		"category": "abc",
+		"title": "producto 1",
+		"description": "p",
+		"price": "p",
+		"code": "pp",
+		"stock": "p",
+		"category": "p",
 		"id": 1
 	},
 	{
 		"title": "producto 2",
-		"description": "Este es un producto 2",
-		"price": "222",
-		"thumbnail": "imagencita",
-		"code": "abc12345",
-		"stock": "2545",
-		"category": "abc",
+		"description": "p",
+		"price": "p",
+		"code": "ppp",
+		"stock": "p",
+		"category": "p",
 		"id": 2
 	},
 	{
-		"title": "nota con server",
-		"description": "o",
-		"price": " no",
-		"code": "lo",
-		"stock": "se",
-		"category": "je",
+		"title": "producto 3",
+		"description": "p",
+		"price": "p",
+		"code": "pp",
+		"stock": "p",
+		"category": "p",
 		"id": 3
-	},
-	{
-		"title": " nota de ui",
-		"description": "l",
-		"price": "l",
-		"code": "l",
-		"stock": "l",
-		"category": "l",
-		"id": 4
 	}
 ]
