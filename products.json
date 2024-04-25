@@ -9,21 +9,39 @@
 		"id": 1
 	},
 	{
-		"title": "producto 2",
-		"description": "p",
-		"price": "p",
-		"code": "ppp",
-		"stock": "p",
-		"category": "p",
+		"title": "Producto 2",
+		"description": "Test 2",
+		"price": "1",
+		"code": "2",
+		"stock": "10",
+		"category": "TEST ACT 2",
 		"id": 2
 	},
 	{
-		"title": "producto 3",
-		"description": "p",
-		"price": "p",
-		"code": "pp",
-		"stock": "p",
-		"category": "p",
+		"title": "Producto 3",
+		"description": "Test 3",
+		"price": "1",
+		"code": "2",
+		"stock": "10",
+		"category": "TEST ACT 2",
 		"id": 3
+	},
+	{
+		"title": "Producto 4",
+		"description": "Test 4",
+		"price": "1",
+		"code": "2",
+		"stock": "10",
+		"category": "TEST ACT 2",
+		"id": 4
+	},
+	{
+		"title": "Producto 6",
+		"description": "test",
+		"price": "1",
+		"code": "1",
+		"stock": "1",
+		"category": "TEST ACT 2",
+		"id": 5
 	}
 ]
