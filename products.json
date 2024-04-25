@@ -25,5 +25,14 @@
 		"stock": "p",
 		"category": "p",
 		"id": 3
+	},
+	{
+		"title": "producto 4",
+		"description": "p",
+		"price": "p",
+		"code": "p",
+		"stock": "p",
+		"category": "p",
+		"id": 4
 	}
 ]

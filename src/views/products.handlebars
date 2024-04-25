@@ -1,7 +1,7 @@
 <div class="container h-100">
     <div class="row h-100">
         <div class="col-md-4 my-auto">
-            <form id="noteForm" class="card card-body rounded-0">
+            <form id="noteForm" class="card card-body rounded-0" onsubmit="createProduct(event)">
                 <h1 class="h3 mb-5">Agregar nota</h1>
                 <input
                 id="title"
@@ -53,33 +53,10 @@
         </div>
 
         <div id="productos" class="col-md-8 py-3">
-            {{#if products}} 
-                {{#each products}}
-
-                    <div class="card card-body rounded-0 animate__animated animate__fadeInUp mb-2 ">
-                        <div class="d-flex justify-content-between">
-                            <h1 class="card-title h3">{{this.title}}</h1>
-                            <div>
-                                <button class="btn btn-danger delete" data-id={{this.id}}>delete</button>
-                                <button class="btn btn-secondary update" data-id={{this.id}}>update</button>
-                            </div>
-                        </div>
-                        <div>
-                            <p>{{this.description}}</p>
-                        </div>
-                    </div>
-
-                {{/each}}
-                
-            {{/if }}
+            {{!-- Rendered by code --}}
         </div>
     <div>
 </div>
 
-
-
-
-
-</main>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/products.js"></script>
