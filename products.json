@@ -1,9 +1,9 @@
 [
 	{
-		"title": "producto 1",
+		"title": "producto uno",
 		"description": "p",
 		"price": "p",
-		"code": "pp",
+		"code": "p",
 		"stock": "p",
 		"category": "p",
 		"id": 1
@@ -25,14 +25,5 @@
 		"stock": "p",
 		"category": "p",
 		"id": 3
-	},
-	{
-		"title": "producto cuatro",
-		"description": "p",
-		"price": "p",
-		"code": "p",
-		"stock": "p",
-		"category": "p",
-		"id": 4
 	}
 ]

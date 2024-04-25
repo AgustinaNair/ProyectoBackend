@@ -3,14 +3,14 @@ const socket = io()
 
 // API calls
 const deleteProduct = async (id) => {
-    await fetch(`api/products/${id}`, {
+    await fetch(`/api/products/${id}`, {
         method: 'DELETE'
     });
 }
 
 const updateProduct = async (id) => {
     const [form, data] = parseDatafromForm();
-    await fetch(`api/products/${id}`, {
+    await fetch(`/api/products/${id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
         headers: {
