@@ -6,7 +6,10 @@ import { __dirname } from './utils.js'
 import { uploader } from './utils.js'
 import { engine} from 'express-handlebars'
 import { Server } from 'socket.io'
+import {connectDB} from './config/index.js'
+
 console.log(__dirname )
+
 const app = express()
 const PORT = process.env.PORT ||8080
 // Guardar en una const el app.listen
@@ -43,6 +46,9 @@ app.use((req,res, next)=>{
     req.io= io
     next()
 })
+
+// Mongo DB 
+connectDB()
 app.use('/', viewsRuter)
 
 app.use('/api/products', productsRouter)

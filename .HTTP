@@ -1,0 +1,47 @@
+# Products
+
+GET http://localhost:8080/api/products
+
+###
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+    "title": "producto nuevo 1",
+    "description": "p",
+    "price": "p",
+    "code": "pp",
+    "stock": "p",
+    "category": "p"
+}
+###
+GET http://localhost:8080/api/products/6637d7945b022c496a80579e
+
+###
+PUT http://localhost:8080/api/products/6637e945ff18b83701e81b55
+Content-Type: application/json
+
+{
+    "title": "producto nuevo 6",
+    "description": "p",
+    "price": "p",
+    "code": "pp",
+    "stock": "p",
+    "category": "p"
+}
+###
+DELETE http://localhost:8080/api/products/6637e945ff18b83701e81b55
+
+###Carts
+
+GET http://localhost:8080/api/carts/66380bba2890e8996c749c20
+###
+POST http://localhost:8080/api/carts/
+
+###
+POST http://localhost:8080/api/carts/66380bba2890e8996c749c20/product/5
+Content-Type: application/json
+
+{
+    "quantity": 9
+}

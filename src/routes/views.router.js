@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import ProductManager from '../manages/ProductManager.js'
+import ProductManager from '../dao/Dao/ProductManager.js'
 import { Server } from 'socket.io';
 
 const {getProduct} = new ProductManager('./products.json')
