@@ -1,8 +1,9 @@
 import { Router } from 'express'
 import ProductManager from '../dao/Dao/ProductManager.js'
 import { Server } from 'socket.io';
+import ProductMongoManager from '../dao/Dao/productMongo.Manager.js';
 
-const {getProduct} = new ProductManager('./products.json')
+const productService = new ProductMongoManager
 
 const router = Router()
 
@@ -19,6 +20,14 @@ router.get('/', (req, res)=>{
         products
     })
 })
+router.get('/products', async (req, res)=>{
+    const {limit, numPage, sort, query} = req.query
+    const {docs, page, hasPrevPage, hasNextPage, prevPage, nextPage} = await productService.getProduct({limit, numPage, sort, query})
+    // console.log(respuesta)
+    res.render('products', {
+        products:docs, page, hasPrevPage, hasNextPage, prevPage, nextPage
+    })
+})
 
 router.get('/chat', (req,res)=>{
     res.render('chat', {
@@ -28,12 +37,5 @@ router.get('/chat', (req,res)=>{
 // router.get('/', (req,res) => {
 //     res.render('index',{})
 // })
-router.get('/products', async(req,res )=>{
-    const products = await getProduct()
-    // console.log(req.io)
 
-    res.render('products', {
-        products
-    })
-})
 export default router

@@ -52,8 +52,24 @@
             </form>
         </div>
 
-        <div id="productos" class="col-md-8 py-3">
+        {{!-- <div id="productos" class="col-md-8 py-3">
             {{!-- Rendered by code --}}
+        </div> --}}
+        <div>
+            {{#each products}}
+                <p>Nombre: {{this.first_name}}</p>
+                <p>Email: {{this.email}}</p>
+                <hr>
+            {{/each}}
+            {{#if hasPrevPage}}
+                <a href="/products?numPage={{prevPage}}">Anterior</a>
+            {{/if}}
+
+            <label>{{page}}</label>
+
+            {{#if hasNextPage}}
+                <a href="/products?numPage={{nextPage}}">Siguiente</a>
+            {{/if}}
         </div>
     <div>
 </div>
