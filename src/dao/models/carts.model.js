@@ -12,9 +12,12 @@ const cartsSchema = new Schema({
         }]
     }
 })
-cartsSchema.pre('find', function(){
+cartsSchema.pre('findOne', function(){
     this.populate('products.product')
 })
+// cartsSchema.pre('find', function(){
+//     this.populate('products.product')
+// })
 
 const cartsModel = model('carts', cartsSchema)
 

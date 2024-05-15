@@ -9,10 +9,20 @@ class ProductMongoManager {
         this.path = path;
 
     }
+    getTodosProducts = async () => {
+        try{
+            const products = await productsModel.find()
+            return products
+        }catch(error){
+            console.log(error)
+            return []
+        }
+    }
 
-    getProduct = async ({limit = 10 , numPage = 1, sort = 1, query = null}) => {
+    getProduct = async ({limit = 2 , numPage = 1, sort = 1, query = null}) => {
         try{
             const products = await productsModel.paginate({query}, {limit, page: numPage, lean: true, sort:{price: sort}})
+
             return products
         }catch(error){
             console.log(error)

@@ -1,3 +1,4 @@
+
 const socket = io()
 const input = document.getElementById('message')
 const messageList = document.getElementById('list-message')

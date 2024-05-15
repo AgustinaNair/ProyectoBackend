@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import cartsModel from "../models/carts.model.js";
 import fs from 'fs'
 
@@ -10,7 +11,8 @@ class CartMongoManager {
 
     getCartById = async (cid) => {
         try{
-            const carts = await cartsModel.findOne({_id: cid})
+            const carts = await cartsModel.findOne({_id: cid}).lean()
+
             return carts
         }catch(error){
             console.log(error)
@@ -27,28 +29,93 @@ class CartMongoManager {
     }
     addProduct = async(cid, pid, quantity) =>{
         try{
-            const cart = await cartsModel.findOne({_id: cid})
-            cart.products.push({product: pid, quantity})
-            const respuesta = await cartsModel.findByIdAndUpdate({_id:cid}, cart)
-            return cart
+            let cart = await cartsModel.findById(cid);
+            if (!cart) {
+                throw new Error('El carrito no existe')
+            }    
+            
+            const productId = new mongoose.Types.ObjectId(pid)
+            console.log(productId)
+            const productIndex = cart.products.findIndex(item => item.product.equals(productId));
+            
+            if (productIndex === -1) {
+                cart.products.push({ "product": productId, quantity });
+                
+            } else {
+                cart.products[productIndex].quantity += quantity;
+            }
+            
+            await cart.save();
+            await cartsModel.updateOne({_id: cid}, {$set: cart})
+            console.log('carrito actualizado')
+            return cart;
         }catch (error) {
             console.log(error)
         }  
+
+
     }
-    updateCart = async(cartId, productId, quantity = 1) =>{
+    updateCart = async(cartId, product, quantity = 1) =>{
+        // try {
+        //     let cart = await cartsModel.findById(cartId);
+        //     if (!cart) {
+        //         throw new Error('El carrito no existe')
+        //     }    
+        //     const productId = new mongoose.Types.ObjectId(product)
+        //     console.log(productId)
+        //     const productIndex = cart.products.findIndex(item => item.product.equals(productId));
+            
+        //     if (productIndex === -1) {
+        //         cart.products.push({ "product": productId, quantity });
+                
+        //     } else {
+        //         cart.products[productIndex].quantity += quantity;
+        //     }
+
+        //     await cart.save();
+        //     await cartsModel.updateOne({_id: cartId}, {$set: cart})
+        //     console.log('carrito actualizado')
+        //     return cart;
+
+        // } catch (error) {
+        //     console.error("Error updating cart:", error);
+        //     return { error: "Error updating cart" };
+        // }
+
+        const result = await cartsModel.findOneAndUpdate(
+            {_id: cartId, 'products.product': product},
+            {$inc: {'products.$.quantity': quantity}},
+            {new: true}
+        )
+        if(result) return result
+        const newProductInCart = await cartsModel.findOneAndUpdate(
+            {_id: cartId},
+            { $push: {products:{product: product, quantity: quantity}}},
+            {new: true}
+        )
+        return newProductInCart
+    }
+    updateTodoCart = async(cid, products) =>{
         try {
-            let cart = await cartsModel.findById(cartId);
+            let cart = await cartsModel.findById(cid);
             if (!cart) {
-                console.log('el carrito no existe')
+                throw new Error('El carrito no existe')
             }    
-            const productIndex = cart.products.findIndex(product => product.productId === productId);    
-            if (productIndex === -1) {
-                cart.products.push({ productId, quantity });
-            } else {
-                cart.products[productIndex].quantity = quantity;
-            }
+            products.forEach(({ product, quantity }) => {
+                const productId = new mongoose.Types.ObjectId(product)
+                console.log(productId)
+                const productIndex = cart.products.findIndex(item => item.product.equals(productId));
+    
+                if (productIndex === -1) {
+                    cart.products.push({ "product": productId, quantity });
+                
+                } else {
+                    cart.products[productIndex].quantity += quantity;
+                }
+            });
+
             await cart.save();
-            await cartsModel.updateOne({_id: cartId}, {$set: cart})
+            await cartsModel.updateOne({_id: cid}, {$set: cart})
             console.log('carrito actualizado')
             return cart;
 
@@ -61,7 +128,8 @@ class CartMongoManager {
         try {
             const result = await cartsModel.updateOne(
                 { _id: cartId },
-                { $pull: { products: { productId: productId } } }
+                { $pull: { products: { productId: productId } } },
+                {new:true}
             );
             return result;
         } catch (error) {
@@ -69,7 +137,7 @@ class CartMongoManager {
         }
     }
     deleteTodosLosProduct = async(cartId) =>{
-        const result = await cartsModel.updateOne({_id: cartId}, {$set: {products: []}})
+        const result = await cartsModel.updateOne({_id: cartId}, {$set: {products: []}}, {new:true})
         return result
     }
 }

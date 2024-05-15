@@ -7,6 +7,7 @@ import { uploader } from './utils.js'
 import { engine} from 'express-handlebars'
 import { Server } from 'socket.io'
 import {connectDB} from './config/index.js'
+import cookieParser from 'cookie-parser'
 
 console.log(__dirname )
 
@@ -18,6 +19,7 @@ const PORT = process.env.PORT ||8080
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
+app.use(cookieParser())
 
 // app.get('/', (req,res) => res.send('Bienvenidos'))
 // express usa este motor de plantillas
@@ -96,13 +98,4 @@ io.on('connection', socket =>{
 })
 
 
-// {
-    //     "title":"producto prueba cambiado",
-    //     "description":"Este es un producto cambiado de prueba", 
-    //     "price":"222", 
-    //     "thumbnail": "Sin imagen",
-    //     "code":"abc12345", 
-    //     "stock":"2545",
-    //     "category":"abc"
-    //  }
     

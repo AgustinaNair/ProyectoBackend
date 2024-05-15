@@ -4,12 +4,12 @@ import ProductMongoManager from '../dao/Dao/productMongo.Manager.js'
 const router = Router()
 
 let products =[]
-const {getProduct, addProduct, getProductById, updateProduct, deleteProduct} = new ProductMongoManager()
+const {getTodosProducts, addProduct, getProductById, updateProduct, deleteProduct} = new ProductMongoManager()
 
-// router.get('/', async(req, res) => {
-//     const products = await getProduct()
-//     res.send({status:'success', payload:products})
-// })
+router.get('/', async(req, res) => {
+    const products = await getTodosProducts()
+    res.send({status:'success', payload:products})
+})
 
 router.get('/:pid', async(req, res) => {
     const {pid} = req.params

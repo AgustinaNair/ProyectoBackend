@@ -7,7 +7,7 @@ POST http://localhost:8080/api/products
 Content-Type: application/json
 
 {
-    "title": "producto 2",
+    "title": "producto 5",
     "description": "p",
     "price": 3,
     "code": "pp",
@@ -35,29 +35,35 @@ DELETE http://localhost:8080/api/products/6637f2bc7c48f4c6dea6648a
 
 ###Carts----------------------------------------
 
-GET http://localhost:8080/api/carts/66380bba2890e8996c749c20
+GET http://localhost:8080/api/carts/663d08c69f705cc63996f3c7
 
 ### crear carrito
 POST http://localhost:8080/api/carts/
 
-### agregar productos al carrito NO ANDA
-POST http://localhost:8080/api/carts/66380bba2890e8996c749c20/product/663d4c57cdac8e1db8924a28
+### agregar productos al carrito si existe suma la cantidad
+POST http://localhost:8080/api/carts/663d08c69f705cc63996f3c7/product/6642db114b80c58d9fd1842f
 Content-Type: application/json
+
 {
    "quantity": 1
 }
 
-### actualizar carrito NOSE QUE HAY QUE HACER ACA
-PUT http://localhost:8080/api/carts/66380bba2890e8996c749c20
+### actualizar carrito 
+PUT http://localhost:8080/api/carts/663d08c69f705cc63996f3c7
+Content-Type: application/json
 
-### actualizar cantidad de un carrito NO ANDA
-PUT http://localhost:8080/api/carts/66380bba2890e8996c749c20/product/663d4c57cdac8e1db8924a28
+[
+    {"product": "6642db114b80c58d9fd1842f", "quantity": 5},
+    {"product": "6642db164b80c58d9fd18431", "quantity": 5}
+]
+### actualizar cantidad de un carrito 
+PUT http://localhost:8080/api/carts/663d08c69f705cc63996f3c7/product/6642db114b80c58d9fd1842f
 Content-Type: application/json
 
 {
-    "quantity": 10
+    "quantity": 1
 }
 ###
-DELETE http://localhost:8080/api/carts/663d0fea2d55a5dbf7b0187b/product/9
+DELETE http://localhost:8080/api/carts/663d08c69f705cc63996f3c7/product/6642db1a4b80c58d9fd18433
 ###
-DELETE http://localhost:8080/api/carts/66380bba2890e8996c749c20/
+DELETE http://localhost:8080/api/carts/663d08c69f705cc63996f3c7

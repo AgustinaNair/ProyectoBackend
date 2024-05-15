@@ -2,8 +2,11 @@ import { Router } from 'express'
 import ProductManager from '../dao/Dao/ProductManager.js'
 import { Server } from 'socket.io';
 import ProductMongoManager from '../dao/Dao/productMongo.Manager.js';
+import CartMongoManager from '../dao/Dao/CartMongo.Manager.js'
 
 const productService = new ProductMongoManager
+const cartService = new CartMongoManager
+
 
 const router = Router()
 
@@ -23,7 +26,7 @@ router.get('/', (req, res)=>{
 router.get('/products', async (req, res)=>{
     const {limit, numPage, sort, query} = req.query
     const {docs, page, hasPrevPage, hasNextPage, prevPage, nextPage} = await productService.getProduct({limit, numPage, sort, query})
-    // console.log(respuesta)
+console.log(docs)
     res.render('products', {
         products:docs, page, hasPrevPage, hasNextPage, prevPage, nextPage
     })
@@ -32,6 +35,15 @@ router.get('/products', async (req, res)=>{
 router.get('/chat', (req,res)=>{
     res.render('chat', {
         styles: 'homeStyles.css'
+    })
+})
+router.get('/carts/:cid', async (req,res)=>{
+    const{cid} = req.params
+    const {products} = await cartService.getCartById(cid)
+    console.log(products)
+ 
+    res.render('carts', {
+        products, cid
     })
 })
 // router.get('/', (req,res) => {

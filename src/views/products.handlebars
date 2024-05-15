@@ -1,5 +1,7 @@
 <div class="container h-100">
-    <div class="row h-100">
+
+    {{!-- este es el formulario para agregar productos en tiempo real --}}
+    {{!-- <div class="row h-100">
         <div class="col-md-4 my-auto">
             <form id="noteForm" class="card card-body rounded-0" onsubmit="createProduct(event)">
                 <h1 class="h3 mb-5">Agregar nota</h1>
@@ -52,15 +54,30 @@
             </form>
         </div>
 
-        {{!-- <div id="productos" class="col-md-8 py-3">
-            {{!-- Rendered by code --}}
-        </div> --}}
-        <div>
+        <div id="productos" class="col-md-8 py-3">
+            Rendered by code
+        </div> 
+        <div> --}}
+
+
+
+
             {{#each products}}
-                <p>Nombre: {{this.first_name}}</p>
-                <p>Email: {{this.email}}</p>
-                <hr>
+                <div class="card card-body rounded-0 animate__animated animate__fadeInUp mb-2 ">
+                    <div class="d-flex justify-content-between">
+                        <h1 class="card-title h3">{{this.title}}</h1> 
+                        <div>
+                            {{!-- <button class="btn btn-danger delete miBotonDelete" id={{this.id}} data-id={{this.id}}>delete</button> --}}
+                            <button class="btn btn-secondary  miBotonAgregar" id={{this.id}} data-id={{this.id}}>Agregar al carrito</button>
+                            {{!-- <button class="btn btn-secondary update" onclick="updateProduct(${product.id})" data-id={{this.id}}>update</button> --}}
+                        </div>
+                    </div>
+                    <div>
+                        <p>{{this.description}}</p>
+                    </div>
+                </div>
             {{/each}}
+
             {{#if hasPrevPage}}
                 <a href="/products?numPage={{prevPage}}">Anterior</a>
             {{/if}}
@@ -75,4 +92,4 @@
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/products.js"></script>
+<script src="js/products.js"></script>

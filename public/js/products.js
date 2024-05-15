@@ -1,13 +1,38 @@
 // Initializers
 const socket = io()
 
+const botonesDelete = document.getElementsByClassName('miBotonDelete');
+const botonesAgregar = document.getElementsByClassName('miBotonAgregar');
+
+
 // API calls
-const deleteProduct = async (id) => {
-    await fetch(`/api/products/${id}`, {
+const deleteProduct = async () => {
+    let idDelBoton = event.target.id;
+    console.log("producto borrado" + idDelBoton);
+    await fetch(`/api/products/${idDelBoton}`, {
         method: 'DELETE'
     });
+   
 }
-
+const AddProduct = async () => {
+    let idDelBoton = event.target.id;
+    console.log("agregando al carrito este producto: " + idDelBoton);
+    await fetch(`/api/carts/663d08c69f705cc63996f3c7/product/${idDelBoton}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({quantity: 1})
+    });
+    alert("El producto se ha agregado al carrito.");
+        
+}
+for (let i = 0; i < botonesDelete.length; i++) {
+    botonesDelete[i].addEventListener('click', deleteProduct);
+}
+for (let i = 0; i < botonesAgregar.length; i++) {
+    botonesAgregar[i].addEventListener('click', AddProduct);
+}
 const updateProduct = async (id) => {
     const [form, data] = parseDatafromForm();
     await fetch(`/api/products/${id}`, {
@@ -68,27 +93,3 @@ const parseDatafromForm = () => {
     return [noteForm, jsonData];
 }
 
-const renderProductList = async () => {
-    const products = await getProducts();
-    const productListElement = document.getElementById('productos');
-    productListElement.innerHTML =''
-    products.forEach((product) => {
-        const productItem = document.createElement('div');
-        productItem.innerHTML = `
-            <div class="card card-body rounded-0 animate__animated animate__fadeInUp mb-2 ">
-                <div class="d-flex justify-content-between">
-                    <h1 class="card-title h3">${product.title}</h1>
-                <div>
-                <button class="btn btn-danger delete" onclick="deleteProduct(${product.id})" data-id=${product.id}>delete</button>
-                <button class="btn btn-secondary update" onclick="updateProduct(${product.id})" data-id=${product.id}>update</button>
-            </div>
-            </div>
-                <div>
-                    <p>${product.description}</p>
-                </div>
-            </div>`;
-        productListElement.appendChild(productItem);
-    });
-}
-
-renderProductList();

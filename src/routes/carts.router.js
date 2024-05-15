@@ -2,7 +2,7 @@ import { Router } from "express";
 import cartMongoManager from "../dao/Dao/CartMongo.Manager.js";
 const router = Router()
 
-const {addCart, getCartById, updateCart, deleteproduct, deleteTodosLosProduct, addProduct} = new cartMongoManager()
+const {addCart, getCartById, updateCart, deleteproduct, deleteTodosLosProduct, addProduct, updateTodoCart} = new cartMongoManager()
 
 router.get('/:cid', async(req, res) => {
     const {cid} = req.params
@@ -19,6 +19,12 @@ router.post('/:cid/product/:pid', async(req, res) => {
     const { quantity } = req.body;
     const result = await addProduct(cid, pid, quantity);
     res.send({status: 'seccess', payload: result})
+})
+router.put('/:cid', async(req,res)=>{
+    const { cid } = req.params;
+    const { product, quantity } = req.body;
+    const result = await updateTodoCart(cid, req.body);
+    res.send({status:'success', payload: result})
 })
 router.put('/:cid/product/:pid', async(req,res)=>{
     const { cid, pid } = req.params;
