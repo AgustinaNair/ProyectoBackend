@@ -39,11 +39,11 @@ router.get('/chat', (req,res)=>{
 })
 router.get('/carts/:cid', async (req,res)=>{
     const{cid} = req.params
-    const {products} = await cartService.getCartById(cid)
-    console.log(products)
+    const {carts} = await cartService.getCartById(cid)
+    console.log(carts)
  
     res.render('carts', {
-        products, cid
+        carts, cid
     })
 })
 // router.get('/', (req,res) => {
