@@ -67,3 +67,19 @@ Content-Type: application/json
 DELETE http://localhost:8080/api/carts/663d08c69f705cc63996f3c7/product/6642db1a4b80c58d9fd18433
 ###
 DELETE http://localhost:8080/api/carts/663d08c69f705cc63996f3c7
+
+
+### SESSIONS
+POST http://localhost:8080/api/sessions/login
+Content-Type: application/json
+
+{
+    "email": "XXX",
+    "password": "adminCoder"
+}
+
+### 
+GET http://localhost:8080/pruebas/logout
+
+###
+GET http://localhost:8080/pruebas/current

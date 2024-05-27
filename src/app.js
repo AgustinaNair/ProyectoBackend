@@ -8,21 +8,34 @@ import { engine} from 'express-handlebars'
 import { Server } from 'socket.io'
 import {connectDB} from './config/index.js'
 import cookieParser from 'cookie-parser'
+import pruebasRouter from './routes/pruebas.js'
+import session from 'express-session'
+import sessionRouter from './routes/sessions.router.js'
+import MongoStore from 'connect-mongo'
 
 console.log(__dirname )
 
 const app = express()
 const PORT = process.env.PORT ||8080
-// Guardar en una const el app.listen
-// middleware
 // app.use (productSocket(io))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
-app.use(cookieParser())
+app.use(cookieParser('Firmasecreta'))
 
-// app.get('/', (req,res) => res.send('Bienvenidos'))
-// express usa este motor de plantillas
+
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl:'mongodb+srv://agustinadesinano:quebuenacontraseña@cluster0.b2cdbfu.mongodb.net/ecommercee',
+        mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+        ttl: 60*60*1000*24
+    }),
+    secret: 'Firmasecreta',
+    resave: true,
+    saveUninitialized: true
+}))
+
+
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 // setiamos la direccion de las vistar / plantillas
@@ -52,10 +65,12 @@ app.use((req,res, next)=>{
 // Mongo DB 
 connectDB()
 app.use('/', viewsRuter)
+app.use('/pruebas', pruebasRouter)
 
 app.use('/api/products', productsRouter)
 
 app.use('/api/carts', cartsRoutes)
+app.use('/api/sessions', sessionRouter)
 
 app.use((error, req, res, next) => {
     console.log(error)
@@ -80,7 +95,7 @@ io.on('connection', socket =>{
 
 })
 let messages= []
-// llamar al manager
+
 io.on('connection', socket =>{
     console.log('cliente conectado')
 
@@ -91,7 +106,7 @@ io.on('connection', socket =>{
         // emitimos los mensajes
         io.emit('messageLogs', messages)
     })
-
+//path ttl-retires
 
 
 
