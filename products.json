@@ -1,0 +1,29 @@
+[
+	{
+		"title": "producto uno",
+		"description": "p",
+		"price": "p",
+		"code": "p",
+		"stock": "p",
+		"category": "p",
+		"id": 1
+	},
+	{
+		"title": "producto 2",
+		"description": "p",
+		"price": "p",
+		"code": "ppp",
+		"stock": "p",
+		"category": "p",
+		"id": 2
+	},
+	{
+		"title": "producto 3",
+		"description": "p",
+		"price": "p",
+		"code": "pp",
+		"stock": "p",
+		"category": "p",
+		"id": 3
+	}
+]

@@ -1,0 +1,96 @@
+# Products
+
+GET http://localhost:8080/api/products
+
+###
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+    "title": "producto 5",
+    "description": "p",
+    "price": 3,
+    "code": "pp",
+    "stock": 2,
+    "category": "p"
+}
+###
+GET http://localhost:8080/api/products/6637f2bc7c48f4c6dea6648a
+
+###
+PUT http://localhost:8080/api/products/6637f2bc7c48f4c6dea6648a
+Content-Type: application/json
+
+{
+    "title": "producto actualizado",
+    "description": "p",
+    "price": "p",
+    "code": "pp",
+    "stock": "p",
+    "category": "p"
+}
+###
+DELETE http://localhost:8080/api/products/6637f2bc7c48f4c6dea6648a
+
+
+###Carts----------------------------------------
+
+GET http://localhost:8080/api/carts/663d08c69f705cc63996f3c7
+
+### crear carrito
+POST http://localhost:8080/api/carts/
+
+### agregar productos al carrito si existe suma la cantidad
+POST http://localhost:8080/api/carts/663d08c69f705cc63996f3c7/product/6642db114b80c58d9fd1842f
+Content-Type: application/json
+
+{
+   "quantity": 1
+}
+
+### actualizar carrito 
+PUT http://localhost:8080/api/carts/663d08c69f705cc63996f3c7
+Content-Type: application/json
+
+[
+    {"product": "6642db114b80c58d9fd1842f", "quantity": 5},
+    {"product": "6642db164b80c58d9fd18431", "quantity": 5}
+]
+### actualizar cantidad de un carrito 
+PUT http://localhost:8080/api/carts/663d08c69f705cc63996f3c7/product/6642db114b80c58d9fd1842f
+Content-Type: application/json
+
+{
+    "quantity": 1
+}
+###
+DELETE http://localhost:8080/api/carts/663d08c69f705cc63996f3c7/product/6642db1a4b80c58d9fd18433
+###
+DELETE http://localhost:8080/api/carts/663d08c69f705cc63996f3c7
+
+
+### SESSIONS
+POST http://localhost:8080/api/sessions/login
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "adminCoder"
+}
+
+###
+POST http://localhost:8080/api/sessions/register
+Content-Type: application/json
+
+{
+    "first_name": "client",
+    "last_name": "uno",
+    "email": "admin@gmail.com",
+    "password": "adminCoder"
+}
+
+### 
+GET http://localhost:8080/pruebas/logout
+
+###
+GET http://localhost:8080/pruebas/current
