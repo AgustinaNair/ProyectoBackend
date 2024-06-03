@@ -74,8 +74,19 @@ POST http://localhost:8080/api/sessions/login
 Content-Type: application/json
 
 {
-    "email": "XXX",
-    "password": "adminCoder"
+    "email": "otroUser@gmail.com",
+    "password": "usuariojeje"
+}
+
+###
+POST http://localhost:8080/api/sessions/register
+Content-Type: application/json
+
+{
+    "first_name": "Client",
+    "last_name": "Uno",
+    "email": "otroUser@gmail.com",
+    "password": "usuariojeje"
 }
 
 ### 

@@ -12,6 +12,8 @@ import pruebasRouter from './routes/pruebas.js'
 import session from 'express-session'
 import sessionRouter from './routes/sessions.router.js'
 import MongoStore from 'connect-mongo'
+import passport from 'passport'
+import { initializePassport } from './config/passport.config.js'
 
 console.log(__dirname )
 
@@ -34,7 +36,9 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
-
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
@@ -66,16 +70,13 @@ app.use((req,res, next)=>{
 connectDB()
 app.use('/', viewsRuter)
 app.use('/pruebas', pruebasRouter)
-
 app.use('/api/products', productsRouter)
-
 app.use('/api/carts', cartsRoutes)
 app.use('/api/sessions', sessionRouter)
-
-app.use((error, req, res, next) => {
-    console.log(error)
-    res.status(500).send('Error 500 en el server')
-})
+// app.use((error, req, res, next) => {
+//     console.log(error)
+//     res.status(500).send('Error 500 en el server')
+// })
 io.on('connection', socket =>{
     console.log('nuevo cliente conectado')
     
@@ -112,5 +113,3 @@ io.on('connection', socket =>{
 
 })
 
-
-    
