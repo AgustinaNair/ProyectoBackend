@@ -15,13 +15,12 @@ export class UsersManagerMongo {
         return await this.userModel.create(newUser)
     }
   
-    async getUserBy(filter) {
-      console.log(filter);
-      return this.userModel.findOne(filter);
+    async getUserBy (filter) {
+      return await this.userModel.findOne(filter);
     }
   
     async getUserByEmail(email) {
-      return this.users.find((user) => user.email === email);
+      return  this.users.find((user) => user.email === email);
     }  
   
   }

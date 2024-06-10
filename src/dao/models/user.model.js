@@ -9,12 +9,17 @@ const userSchema = new Schema({
         index: true
     },
     last_name: String,
+    age: Number,
     email: {
         type: String,
         required: true, 
         unique: true
     },
     password: String,
+    cartId: {
+        type: Schema.Types.ObjectId,
+        ref: 'carts'
+    },
     role: {
         type: String,
         default: 'user'
