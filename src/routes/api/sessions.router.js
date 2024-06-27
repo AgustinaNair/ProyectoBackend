@@ -1,16 +1,16 @@
 import { Router } from "express";
-import {UsersManagerMongo} from '../dao/Dao/UsersManagerMongo.js'
-import { auth } from "../middlewares/auth.middleware.js";
-import { createHash, isValidPassword } from "../utils/bcrypt.js";
+import {UsersDaoMongo} from '../../dao/Dao/UsersDaoMongo.js'
+// import { auth } from "../middlewares/auth.middleware.js";
+import { createHash, isValidPassword } from "../../utils/bcrypt.js";
 import passport from "passport";
-import { generateToken } from "../utils/jwt.js";
-import { passportCall } from "../middlewares/passportCall.middleware.js";
-import { authorization } from "../middlewares/authorization.middleware.js";
-import CartMongoManager from "../dao/Dao/CartMongo.Manager.js";
+import { passportCall } from "../../middlewares/passportCall.middleware.js";
+import { authorization } from "../../middlewares/authorization.middleware.js";
+import CartMongoDao from "../../dao/Dao/CartMongo.Dao.js";
+import { generateToken } from "../../config/index.js";
 
 const router = Router()
-const userService = new UsersManagerMongo()
-const cartService = new CartMongoManager()
+const userService = new UsersDaoMongo()
+const cartService = new CartMongoDao()
 
 router.get('/github', passport.authenticate('github', {scope: 'user:email'}), async (req, res)=>{})
 
@@ -43,7 +43,7 @@ router.post('/register', async(req, res) => {
             cartId
         }
 
-        if(email === 'adminCoder@coder.com' || password === 'adminCod3r123') {
+        if(email === process.env.USER_ADMIN || password === process.env.USER_PASS) {
             newUser = {
                 first_name,
                 last_name,

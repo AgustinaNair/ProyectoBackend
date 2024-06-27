@@ -3,11 +3,10 @@ import passport from 'passport'
 import { Strategy, ExtractJwt} from 'passport-jwt'
 import local from 'passport-local'
 import GithubStratetegy from 'passport-github2'
-import { UsersManagerMongo } from '../dao/Dao/UsersManagerMongo.js'
-import { PRIVATE_KEY } from '../utils/jwt.js'
+import { UsersDaoMongo } from '../dao/Dao/UsersDaoMongo.js'
 
 
-const userService = new UsersManagerMongo()
+const userService = new UsersDaoMongo()
 const LocalStrategy = local.Strategy
 
 const cookieExtractor = req => {
@@ -19,7 +18,7 @@ const cookieExtractor = req => {
 export const initializePassport = () => {
     passport.use ('jwt', new Strategy({
         jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-        secretOrKey: PRIVATE_KEY
+        secretOrKey: process.env.PRIVATE_KEY
     }, async (jwt_payload, done) => {
         try {
             return done(null, jwt_payload)

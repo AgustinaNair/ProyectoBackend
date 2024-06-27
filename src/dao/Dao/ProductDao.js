@@ -1,7 +1,7 @@
 import fs from 'fs'
 // const socket = io()
 
-class ProductManager {
+class ProductDao {
     static id = 1
     
     constructor(path) {
@@ -109,4 +109,4 @@ class ProductManager {
 
 
 
-export default ProductManager
+export default ProductDao

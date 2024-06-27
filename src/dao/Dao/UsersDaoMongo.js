@@ -1,6 +1,6 @@
 import { userModel } from "../models/user.model.js";
 
-export class UsersManagerMongo {
+export class UsersDaoMongo {
     constructor() {
       this.userModel = userModel;
     }

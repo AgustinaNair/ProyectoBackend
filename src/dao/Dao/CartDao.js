@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-class CartManager {
+class CartDao {
     static id = 1
     
     constructor(path) {
@@ -94,4 +94,4 @@ class CartManager {
 
 
 
-export default CartManager
+export default CartDao

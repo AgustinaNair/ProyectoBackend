@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import cartsModel from "../models/carts.model.js";
 import fs from 'fs'
 
-class CartMongoManager {
+class CartDaoManager {
     
     constructor(path) {
         this.path = path;
@@ -142,7 +142,7 @@ class CartMongoManager {
     }
 }
 
-export default CartMongoManager
+export default CartDaoManager
 
 
 

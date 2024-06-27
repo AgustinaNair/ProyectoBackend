@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import ProductManager from '../dao/Dao/ProductManager.js'
+import ProductDao from '../dao/Dao/ProductDao.js'
 import { Server } from 'socket.io';
-import ProductMongoManager from '../dao/Dao/ProductMongo.Manager.js';
-import CartMongoManager from '../dao/Dao/CartMongo.Manager.js'
+import ProductMongoManager from '../dao/Dao/ProductMongo.Dao.js';
+import CartMongoDao from '../dao/Dao/CartMongo.Dao.js'
 
 
 const productService = new ProductMongoManager
-const cartService = new CartMongoManager
+const cartService = new CartMongoDao
 
 
 
