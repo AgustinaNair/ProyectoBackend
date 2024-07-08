@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import messagesModel from '../../dao/models/messages.models'
+import messagesModel from '../../daos/models/messages.models'
 
 const router = Router()
 router.get('/', async(req, res) => {

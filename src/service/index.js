@@ -1,6 +1,6 @@
-import CartMongoDao from "../dao/Dao/CartMongo.Dao.js";
-import ProductMongoDao from "../dao/Dao/ProductMongo.Dao.js";
-import { UsersDaoMongo } from "../dao/Dao/UsersDaoMongo.js";
+import CartMongoDao from "../daos/Dao/CartMongo.Dao.js";
+import ProductMongoDao from "../daos/Dao/ProductMongo.Dao.js";
+import { UsersDaoMongo } from "../daos/Dao/UsersDaoMongo.js";
 
 
 export const userService = new UsersDaoMongo()

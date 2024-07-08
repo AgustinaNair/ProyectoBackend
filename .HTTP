@@ -3,11 +3,11 @@
 GET http://localhost:8080/api/products
 
 ###
-POST http://localhost:8080/api/products
+POST http://localhost:8080
 Content-Type: application/json
 
 {
-    "title": "producto 5",
+    "title": "producto 97",
     "description": "p",
     "price": 3,
     "code": "pp",
@@ -18,19 +18,19 @@ Content-Type: application/json
 GET http://localhost:8080/api/products/6637f2bc7c48f4c6dea6648a
 
 ###
-PUT http://localhost:8080/api/products/6637f2bc7c48f4c6dea6648a
+PUT http://localhost:8080/api/products/6642db114b80c58d9fd1842f
 Content-Type: application/json
 
 {
     "title": "producto actualizado",
     "description": "p",
-    "price": "p",
+    "price": 6,
     "code": "pp",
-    "stock": "p",
+    "stock": 5,
     "category": "p"
 }
 ###
-DELETE http://localhost:8080/api/products/6637f2bc7c48f4c6dea6648a
+DELETE http://localhost:8080/api/products/6642db114b80c58d9fd1842f
 
 
 ###Carts----------------------------------------

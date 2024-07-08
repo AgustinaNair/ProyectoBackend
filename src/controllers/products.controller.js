@@ -30,7 +30,7 @@ class ProductController {
             const {title, description, price, thumbnail, code, stock, category} = req.body
             if(!title || !description || !price || !code || !stock || !category) return res.send({status: 'error', error: 'faltan datos'})
             const result = await this.service.addProduct(req.body)
-            req.io.emit('producto-agregado', result)
+            // req.io.emit('producto-agregado', result)
             res.send({status: 'success', payload: result})   
         } catch (error) {
             console.log(error)
@@ -44,7 +44,7 @@ class ProductController {
         if(!title || !description || !price || !code || !stock || !category) return res.send({status: 'error', error: 'faltan datos'})
         
         const result = await this.service.updateProduct(pid, {title, description, price, thumbnail, code, stock, category})
-        req.io.emit('producto-actualizado', result)
+        // req.io.emit('producto-actualizado', result)
         res.send({status:'success', payload: result})            
         } catch (error) {
             console.log(error)
@@ -55,7 +55,7 @@ class ProductController {
         try {
         const {pid} = req.params
         const result = await this.service.deleteProduct(pid)
-        req.io.emit('producto-eliminado', result)
+        // req.io.emit('producto-eliminado', result)
         res.send({status:'success', payload: result})            
         } catch (error) {
             console.log(error)

@@ -3,7 +3,7 @@ import passport from 'passport'
 import { Strategy, ExtractJwt} from 'passport-jwt'
 import local from 'passport-local'
 import GithubStratetegy from 'passport-github2'
-import { UsersDaoMongo } from '../dao/Dao/UsersDaoMongo.js'
+import { UsersDaoMongo } from '../daos/Dao/UsersDaoMongo.js'
 
 
 const userService = new UsersDaoMongo()

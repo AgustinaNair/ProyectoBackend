@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { auth } from "../../middlewares/auth.middleware.js";
 import {fork} from 'child_process'
+import { sendEmail } from "../../utils/sendMail.js";
+import UserCurrentDto from "../../dtos/usersCurrent.dto.js";
+import { authorization } from "../../middlewares/authorization.middleware.js";
 
 const router = Router()
 
@@ -33,9 +36,7 @@ router.get('/deleteCookie', (req, res) => {
     res.clearCookie('cookie').send('cookie borrada')
 })
 // endpoint para session 
-router.get('/current', auth, (req, res) => {
-    res.send('datos sensibles que solo ve el administrador')
-})
+
 router.get('/session', (req, res) => {
     if(req.session.counter){
         req.session.counter++
@@ -50,5 +51,23 @@ router.get('/logout', (req, res) => {
         if(!err) return res.send('session destruida')
         else return res.send({status:'Error', error:err})
     })
+})
+router.get ('/mail', async (req, res)=>{
+    try {
+        const user = {
+            first_name :'Agus',
+            last_name :'Desinano',
+            email :'agustinadesinano@gmail.com',
+        }
+        sendEmail({
+            email: user.email,
+            subject: 'Email de prueba',
+            html: `Bienvenido ${user.first_name} ${user.last_name}`
+        })
+    } catch (error) {
+        console.log(error)
+    }
+    
+    res.send('enviado')
 })
 export default router

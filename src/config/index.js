@@ -14,7 +14,9 @@ export const objectConfig = {
     mongo_url:        process.env.MONGO_URL,
     private_key:      process.env.PRIVATE_KEY,
     user_admin:       process.env.USER_ADMIN,
-    user_pass:        process.env.USER_PASS
+    user_pass:        process.env.USER_PASS,
+    gmail_user:       process.env.GMAIL_USER,
+    gmail_pass:       process.env.GMAIL_PASS
 } 
 export const connectDB = () => {
     connect(process.env.MONGO_URL);

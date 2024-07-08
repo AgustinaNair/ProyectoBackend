@@ -73,7 +73,7 @@ class CartDao {
             const cartIndex = carts.findIndex(cart => cart.id === parseFloat(cid) );
             if (cartIndex !== -1) {
                 const productIndex = carts[cartIndex].products.findIndex(product => product.id === pid);
-                console.log(productIndex)
+                (productIndex)
                 if (productIndex !== -1) {
                     carts[cartIndex].products[productIndex].quantity += quantity;
                 } else {

@@ -9,6 +9,7 @@ import MongoStore from 'connect-mongo'
 import passport from 'passport'
 import { initializePassport } from './config/passport.config.js'
 import routerApp from './routes/index.js'
+import cors from 'cors'
 
 const app = express()
 const {port} = objectConfig
@@ -24,6 +25,7 @@ app.use(session({
         ttl: 60*60*1000*24
     }),
     secret: 'Firmasecreta',
+    // secret: process.env.PRIVATE_KEY,
     resave: true,
     saveUninitialized: true
 }))
@@ -34,6 +36,7 @@ app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', './src/views')
 app.use(routerApp)
+app.use(cors())
 
 const httpServer =  app.listen(port, error =>{
     if(error) console.log(error)

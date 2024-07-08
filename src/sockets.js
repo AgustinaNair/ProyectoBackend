@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 
 let notes = [];
-const {getProduct, addProduct, getProductById, updateProduct, deleteProduct} = new ProductManager('./products.json')
+const {getProduct, addProduct, getProductById, updateProduct, deleteProduct} = new ProductDao('./products.json')
 
 export default (io) => {
   io.on("connection", (socket) => {
