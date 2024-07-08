@@ -30,7 +30,7 @@ class ProductController {
             const {title, description, price, thumbnail, code, stock, category} = req.body
             if(!title || !description || !price || !code || !stock || !category) return res.send({status: 'error', error: 'faltan datos'})
             const result = await this.service.addProduct(req.body)
-            // req.io.emit('producto-agregado', result)
+            req.io.emit('producto-agregado', result)
             res.send({status: 'success', payload: result})   
         } catch (error) {
             console.log(error)

@@ -9,7 +9,7 @@ const {getProducts, getProduct, createProduct, updateProduct, deleteProduct} = n
 
 router.get('/',        getProducts)
 router.get('/:pid',    getProduct)
-router.post('/',       authorization('admin'), createProduct)
+router.post('/',       passportCall('jwt'), authorization('admin'), createProduct)
 router.put('/:pid',    authorization('admin'), updateProduct)
 router.delete('/:pid', authorization('admin'), deleteProduct)
 
