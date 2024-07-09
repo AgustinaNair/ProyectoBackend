@@ -10,7 +10,6 @@ import passport from 'passport'
 import { initializePassport } from './config/passport.config.js'
 import routerApp from './routes/index.js'
 import cors from 'cors'
-
 const app = express()
 const {port} = objectConfig
 // app.use (productSocket(io))

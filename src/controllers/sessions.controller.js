@@ -22,7 +22,7 @@ class SessionsController {
         try{
             const{email, password, first_name, last_name, age} = req.body
             if(!email || !password || !first_name || !last_name || !age) return res.status(401).send({status:'error', error:'faltan datos, completar campos'})
-            const userExist = await this.userService.getUserBy({email})
+            const userExist = await this.userService.getUser({email})
             if(userExist) return res.send({status:'error', error:'usuario ya existe'})
             const cart = await this.cartService.addCart()
             const cartId = cart._id
@@ -75,7 +75,7 @@ class SessionsController {
     loginSessions        = async  (req, res) => {
         const{email, password} = req.body
         if(!email || !password) return res.send({status:'error', error:'faltan datos, completar campos'})
-        const result = await this.userService.getUserBy({email})
+        const result = await this.userService.getUser({email})
         if(!result) return res.status(401).send({status:'error', error:'Usuario incorrecto'})
     
         if(!this.isValidPassword({password :result.password}, password)) return res.status(401).send({status:'error', error:'password incorrecto'})

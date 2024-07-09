@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import cartsModel from "../models/carts.model.js";
 import fs from 'fs'
+import { ticketModel } from "../models/tickets.model.js";
+
+
 
 class CartDaoManager {
     
@@ -139,6 +142,14 @@ class CartDaoManager {
     deleteTodosLosProduct = async(cartId) =>{
         const result = await cartsModel.updateOne({_id: cartId}, {$set: {products: []}}, {new:true})
         return result
+    }
+    buyCart = async(ticket) =>{
+        try {
+            const result = await ticketModel.create(ticket)
+            return result
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 

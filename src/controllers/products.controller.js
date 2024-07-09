@@ -7,7 +7,7 @@ class ProductController {
 
     getProducts   = async(req, res) => {
         try {
-            const products = await this.service.getTodosProducts()
+            const products = await this.service.getProducts()
             res.send({status:'success', payload:products})
         } catch (error) {
             console.log(error)
@@ -29,8 +29,8 @@ class ProductController {
         try {
             const {title, description, price, thumbnail, code, stock, category} = req.body
             if(!title || !description || !price || !code || !stock || !category) return res.send({status: 'error', error: 'faltan datos'})
-            const result = await this.service.addProduct(req.body)
-            req.io.emit('producto-agregado', result)
+            const result = await this.service.createProduct(req.body)
+            // req.io.emit('producto-agregado', result)
             res.send({status: 'success', payload: result})   
         } catch (error) {
             console.log(error)
