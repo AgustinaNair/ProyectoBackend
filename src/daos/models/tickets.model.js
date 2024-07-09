@@ -12,8 +12,8 @@ const ticketsSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    amount: Number,
-    purchaser: String
+    amount: Number, //total de la compra
+    purchaser: String //mail
 })
 
 export const ticketModel = model(ticketsCollection, ticketsSchema)

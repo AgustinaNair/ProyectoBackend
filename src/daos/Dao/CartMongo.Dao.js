@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import cartsModel from "../models/carts.model.js";
 import fs from 'fs'
-import { ticketModel } from "../models/tickets.model.js";
+import { productService, ticketService } from "../../service/index.js";
+
 
 
 
@@ -38,7 +39,6 @@ class CartDaoManager {
             }    
             
             const productId = new mongoose.Types.ObjectId(pid)
-            console.log(productId)
             const productIndex = cart.products.findIndex(item => item.product.equals(productId));
             
             if (productIndex === -1) {
@@ -104,17 +104,19 @@ class CartDaoManager {
             if (!cart) {
                 throw new Error('El carrito no existe')
             }    
+            this.deleteTodosLosProduct(cid)
+            cart.products= []
             products.forEach(({ product, quantity }) => {
                 const productId = new mongoose.Types.ObjectId(product)
                 console.log(productId)
-                const productIndex = cart.products.findIndex(item => item.product.equals(productId));
+                // const productIndex = cart.products.findIndex(item => item.product.equals(productId));
     
-                if (productIndex === -1) {
+                // if (productIndex === -1) {
                     cart.products.push({ "product": productId, quantity });
                 
-                } else {
-                    cart.products[productIndex].quantity += quantity;
-                }
+                // } else {
+                //     cart.products[productIndex].quantity = quantity;
+                // }
             });
 
             await cart.save();
@@ -143,10 +145,50 @@ class CartDaoManager {
         const result = await cartsModel.updateOne({_id: cartId}, {$set: {products: []}}, {new:true})
         return result
     }
-    buyCart = async(ticket) =>{
+    buyCart = async(cid) =>{
         try {
-            const result = await ticketModel.create(ticket)
-            return result
+            let cart = await cartsModel.findById(cid);
+            if (!cart) {
+                throw new Error('El carrito no existe')
+            }   
+            let newCart = []
+            let carritoComprado = []
+            let precioTotal = 0
+            cart.products.forEach((item) => {
+                if (item.product.stock < item.quantity){
+                    console.log('no hay stock sufuciente del producto:' + item.product._id)
+                    newCart.push(item)
+
+                } else if(item.product.stock > item.quantity){
+                    carritoComprado.push(item)
+                    item.product.stock -= item.quantity
+                    let productoAActualizar = {
+                        title:item.product.title,
+                        description:item.product.description,
+                        price:item.product.price, 
+                        thumbnail:item.product.thumbnail, 
+                        code:item.product.code, 
+                        stock:item.product.stock, 
+                        category:item.product.category
+                    }
+                    productService.updateProduct(item.product._id, productoAActualizar)               
+                    console.log('Se compro y se ha actualizado el stock del producto:' + item.product._id)
+                    precioTotal += item.product.price * item.quantity
+                }else if (item.product.stock = item.quantity){
+                    console.log('Se compro el producto:' + item.product._id)
+                    carritoComprado.push(item)
+                    precioTotal += item.product.price * item.quantity
+                }
+
+            });
+            console.log('El carrito quedo asi:' + newCart)
+            await this.updateTodoCart(cid, newCart)
+            await ticketService.createTicket({
+                amount: precioTotal,
+                purchaser: 'usuario@yahoo.cjc'
+            })
+            return carritoComprado;
+
         } catch (error) {
             console.log(error)
         }

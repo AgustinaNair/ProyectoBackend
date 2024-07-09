@@ -77,7 +77,14 @@ class CartController {
         }
     }
     buyCart = async(req, res)=>{
-        
+        console.log(req.user)
+        try {
+            const { cid } = req.params;
+            const result = await this.cartService.buyCart(cid);
+            res.send({status:'success', payload: result})
+        } catch (error) {
+            console.log(error)
+        }
                     
     }   
 }

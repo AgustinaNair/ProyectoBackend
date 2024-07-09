@@ -9,8 +9,6 @@ export const passportCall = strategy => {
                 return res.status(401).send({status:'error', error: info.message  ? info.message: info.toString() });
             }
             req.user = user;
-            console.log('hola')
-            console.log(req.user)
             next();
         })(req, res, next);
     }
