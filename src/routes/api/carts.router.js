@@ -13,6 +13,6 @@ router.put('/:cid',                 updateCart)
 router.put('/:cid/product/:pid',    updateProductCart)
 router.delete('/:cid/product/:pid', deleteProductCart)
 router.delete('/:cid/',             deleteCart)
-router.put('/:cid/purchase',       buyCart)
+router.put('/:cid/purchase',        buyCart)
 
 export default router

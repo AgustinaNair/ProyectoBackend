@@ -1,29 +1,38 @@
-
 const socket = io()
 const input = document.getElementById('message')
 const messageList = document.getElementById('list-message')
 
+let user
+
+Swal.fire({
+    title: 'Ingresa tu nombre',
+    input: 'text',
+    inputValidator: value => {
+        return !value && 'Necesitas ingresar tu nombre'
+    },
+    allowOutsideClick: false,
+    icon: 'success'
+})
+.then (result =>{
+    user = result.value
+})
+
 input.addEventListener('keyup', evt=>{
     if(evt.key === 'Enter'){
-        socket.emit('mensaje_cliente', input.value)
-        input.value=''
-    }
-    
+        if(input.value.trim() !== ''){
+            socket.emit('mensaje_cliente', {user, message: input.value})
+            input.value=''
+        }
+    }  
 })
-// manager create get
-socket.on('message_server', data=>{
-    console.log(data)
-    // aca poner para que se vea en el html todo
-})
-// socket.emit('message', 'data en forma de string')
 
-// socket.on('socket_individual', data=>{
-//     console.log(data)
-// })
-// socket.on('para-todos-menos-el-actual', data=>{
-//     console.log(data)
-// })
-// socket.on('eventos-para-todos', data=>{
-//     console.log(data)
-// })
+socket.on('messages_server', data=>{
+    const messageLog = document.getElementById('message-log')
+    let messages = ''
+    data.forEach(message=>{
+        messages += `<li>${message.user}: ${message.message}</li>`
+    })
+    console.log(messages)
+    messageLog.innerHTML = messages
+})
 

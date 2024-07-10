@@ -37,41 +37,30 @@ app.set('views', './src/views')
 app.use(routerApp)
 app.use(cors())
 
+
+
+
 const httpServer =  app.listen(port, error =>{
     if(error) console.log(error)
     console.log('server escuchando en el puerto '+ port)})
 const io = new Server(httpServer)
 
-// const socketServer= new Server (httpServer)
-
 app.use((req,res, next)=>{
     req.io= io
     next()
 })
- 
 connectDB()
-io.on('connection', socket =>{
-    console.log('nuevo cliente conectado')
-    
-    const messages =[]
 
-    socket.on('mensaje_cliente', data =>{
-        console.log(data)
-        messages.push({id: socket.id, message: data})
-        io.emit('message_server', messages)
-    })
+function chatSocket (){
+    let messages= []
+    io.on('connection', socket =>{
+        socket.on('mensaje_cliente', data =>{
+            messages.push(data)
+            io.emit('messages_server', messages)
+        })
+    })  
+}
+chatSocket()
 
-})
-let messages= []
 
-io.on('connection', socket =>{
-    console.log('cliente conectado')
-
-    socket.on('message', data=>{
-        console.log('message data:', data)
-        messages.push(data)
-        io.emit('messageLogs', messages)
-    })
-
-})
 

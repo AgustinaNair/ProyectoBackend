@@ -3,6 +3,8 @@ import ProductDao from '../daos/Dao/ProductDao.js'
 import { Server } from 'socket.io';
 import ProductMongoManager from '../daos/Dao/ProductMongo.Dao.js';
 import CartMongoDao from '../daos/Dao/CartMongo.Dao.js'
+import { authorization } from '../middlewares/authorization.middleware.js';
+import { passportCall } from '../middlewares/passportCall.middleware.js';
 
 
 const productService = new ProductMongoManager
@@ -43,10 +45,8 @@ router.get('/products', async (req, res)=>{
     });
     
 })
-router.get('/chat', (req,res)=>{
-    res.render('chat', {
-        styles: 'homeStyles.css'
-    })
+router.get('/chat', passportCall('jwt'), authorization('user'), (req,res)=>{
+    res.render('chat')
 })
 router.get('/carts/:cid', async (req,res)=>{
     const{cid} = req.params
@@ -57,9 +57,6 @@ router.get('/carts/:cid', async (req,res)=>{
         carts, cid
     })
 })
-// router.get('/', (req,res) => {
-//     res.render('index',{})
-// })
 router.get('/login', (req,res)=>{
     res.render('login')
 })
