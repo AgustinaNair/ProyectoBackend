@@ -1,3 +1,5 @@
+import { logger } from "../../src/utils/logge.jsr"
+
 const socket = io()
 let user
 // nose si necesito poner algo para que ande eso de abajo
@@ -13,6 +15,7 @@ Swal.fire({
 .then(result =>{
     user = result.value
     // console.log(user)
+    logger.info(user)
 })
 // input del chat
 let chatBox = document.querySelector('#chatbox')
@@ -25,7 +28,7 @@ chatBox.addEventListener('keyup',(evt)=>{
     }
 } )
 socket.on('messageLogs', data=>{
-    console.log('mensajesz del server', data)
+    logger.info('mensajesz del server', data)
     let log = document.querySelector('#messageLog')
     let messages =''
     data.array.forEach(message => {

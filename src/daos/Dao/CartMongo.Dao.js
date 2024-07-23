@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import cartsModel from "../models/carts.model.js";
 import fs from 'fs'
 import { productService, ticketService } from "../../service/index.js";
+import { CustomError } from "../../service/errors/CustomError.js";
+import { generateCartError } from "../../service/errors/info.js";
+import { logger } from "../../utils/logger.js";
 
 
 
@@ -19,7 +22,7 @@ class CartDaoManager {
 
             return carts
         }catch(error){
-            console.log(error)
+            logger.error(error)
             return []
         }
     }
@@ -28,7 +31,7 @@ class CartDaoManager {
             const cart = await cartsModel.create({products:[]})
             return cart
         }catch (error) {
-            console.log(error)
+            logger.error(error)
         }                
     }
     addProduct = async(cid, pid, quantity) =>{
@@ -50,11 +53,11 @@ class CartDaoManager {
             
             await cart.save();
             await cartsModel.updateOne({_id: cid}, {$set: cart})
-            console.log('carrito actualizado')
+            logger.info('carrito actualizado')
             return cart;
         }catch (error) {
-            console.log(error)
-        }  
+            logger.error(error)
+        }        
 
 
     }
@@ -108,7 +111,7 @@ class CartDaoManager {
             cart.products= []
             products.forEach(({ product, quantity }) => {
                 const productId = new mongoose.Types.ObjectId(product)
-                console.log(productId)
+                logger.info(productId)
                 // const productIndex = cart.products.findIndex(item => item.product.equals(productId));
     
                 // if (productIndex === -1) {
@@ -121,11 +124,11 @@ class CartDaoManager {
 
             await cart.save();
             await cartsModel.updateOne({_id: cid}, {$set: cart})
-            console.log('carrito actualizado')
+            logger.info('carrito actualizado')
             return cart;
 
         } catch (error) {
-            console.error("Error updating cart:", error);
+            logger.error("Error updating cart:", error);
             return { error: "Error updating cart" };
         }
     }
@@ -138,7 +141,7 @@ class CartDaoManager {
             );
             return result;
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
     deleteTodosLosProduct = async(cartId) =>{
@@ -156,7 +159,7 @@ class CartDaoManager {
             let precioTotal = 0
             cart.products.forEach((item) => {
                 if (item.product.stock < item.quantity){
-                    console.log('no hay stock sufuciente del producto:' + item.product._id)
+                    logger.info('no hay stock sufuciente del producto:' + item.product._id)
                     newCart.push(item)
 
                 } else if(item.product.stock > item.quantity){
@@ -172,16 +175,16 @@ class CartDaoManager {
                         category:item.product.category
                     }
                     productService.updateProduct(item.product._id, productoAActualizar)               
-                    console.log('Se compro y se ha actualizado el stock del producto:' + item.product._id)
+                    logger.info('Se compro y se ha actualizado el stock del producto:' + item.product._id)
                     precioTotal += item.product.price * item.quantity
                 }else if (item.product.stock = item.quantity){
-                    console.log('Se compro el producto:' + item.product._id)
+                    logger.info('Se compro el producto:' + item.product._id)
                     carritoComprado.push(item)
                     precioTotal += item.product.price * item.quantity
                 }
 
             });
-            console.log('El carrito quedo asi:' + newCart)
+            logger.info('El carrito quedo asi:' + newCart)
             await this.updateTodoCart(cid, newCart)
             await ticketService.createTicket({
                 amount: precioTotal,
@@ -190,7 +193,7 @@ class CartDaoManager {
             return carritoComprado;
 
         } catch (error) {
-            console.log(error)
+            logger.error(error)
         }
     }
 }

@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { logger } from '../../utils/logger.js';
 // const socket = io()
 
 class ProductDao {
@@ -19,7 +20,7 @@ class ProductDao {
             }
             return products
         }catch(error){
-            console.log(error)
+            logger.error(error)
             return []
         }
     }
@@ -37,14 +38,14 @@ class ProductDao {
                 product.id = products.length +1
             }
             products.push(product)
-            console.log(product)
+            logger.info(product)
             await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'), 'utf-8')
             //  io.emit("server:newnote", product);
              return product
 
         }catch (error) {
             product.id = product.length
-            console.log(error)
+            logger.error(error)
         }
 
         
@@ -63,7 +64,7 @@ class ProductDao {
                 return ('Not fount')
             }
         }catch(error){
-            console.log(error)
+            logger.error(error)
         }
 
 
@@ -85,7 +86,7 @@ class ProductDao {
                 return 'Producto no encontrado';
             }
         }catch(error){
-            console.log(error)
+            logger.error(error)
         }
     }
     deleteProduct = async(id) =>{ 
@@ -100,7 +101,7 @@ class ProductDao {
                 return 'Producto no encontrado';
             }
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 }

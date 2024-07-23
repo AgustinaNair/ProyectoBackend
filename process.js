@@ -1,5 +1,7 @@
 // import { Command } from "commander";
 
+import { logger } from "./src/utils/logger.js";
+
 // const program = new Command();
 
 // program
@@ -14,10 +16,10 @@
 //  console.log('Argumentos: ', program.args)
 
 process.on('exit', code => {
-  console.log(`About to exit with code: ${code}`);
+  logger.info(`About to exit with code: ${code}`);
 })
 process.on('uncaughtException', err => {
-  console.log(`Caught exception: ${err}`);
+  logger.info(`Caught exception: ${err}`);
 })
 // process.on('message', message=>{
 //   console.log('mandar a otro proceso')

@@ -7,7 +7,7 @@ POST http://localhost:8080/api/products
 Content-Type: application/json
 
 {
-    "title": "producto 97",
+    "title": "producto 7",
     "description": "p",
     "price": 3,
     "code": "pp",
@@ -41,11 +41,11 @@ GET http://localhost:8080/api/carts/663d08c69f705cc63996f3c7
 POST http://localhost:8080/api/carts/
 
 ### agregar productos al carrito si existe suma la cantidad
-POST http://localhost:8080/api/carts/6684afb1ebaaa9f56a805c32/product/6642db164b80c58d9fd18431
+POST http://localhost:8080/api/carts/668d3d1f34c8afd686cd5ed3/product/6642db164b80c58d9fd18431
 Content-Type: application/json
 
 {
-   "quantity": 1
+   "quantity": 6
 }
 
 ### actualizar carrito 

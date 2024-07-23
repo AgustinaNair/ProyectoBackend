@@ -1,3 +1,5 @@
+import { logger } from "../../src/utils/logger";
+
 // Initializers
 const socket = io()
 
@@ -8,7 +10,7 @@ const botonesAgregar = document.getElementsByClassName('miBotonAgregar');
 // API calls
 const deleteProduct = async () => {
     let idDelBoton = event.target.id;
-    console.log("producto borrado" + idDelBoton);
+    logger.info("producto borrado" + idDelBoton);
     await fetch(`/api/products/${idDelBoton}`, {
         method: 'DELETE'
     });
@@ -16,7 +18,7 @@ const deleteProduct = async () => {
 }
 const AddProduct = async () => {
     let idDelBoton = event.target.id;
-    console.log("agregando al carrito este producto: " + idDelBoton);
+    logger.info("agregando al carrito este producto: " + idDelBoton);
     await fetch(`/api/carts/663d08c69f705cc63996f3c7/product/${idDelBoton}`, {
         method: 'POST',
         headers: {

@@ -1,3 +1,5 @@
+import { logger } from "../../src/utils/logger.js";
+
 const notesList = document.querySelector("#productos");
 
 let savedId = "";
@@ -31,8 +33,8 @@ const noteUI = (note) => {
 const renderNotes = (notes) => {
   savedId = "";
   notesList.innerHTML = "";
-  console.log(notes);
-  console.log('ui:')
+  logger.info(notes);
+  logger.info('ui:')
   notes.forEach((note) => {
     notesList.append(noteUI(note));
   });

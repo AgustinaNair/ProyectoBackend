@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { logger } from '../../utils/logger';
 
 class CartDao {
     static id = 1
@@ -19,7 +20,7 @@ class CartDao {
             }
             return carts
         }catch(error){
-            console.log(error)
+            logger.error(error)
             return []
         }
     }
@@ -39,14 +40,14 @@ class CartDao {
                 ...cart,
                 products: cart.products
             })
-            console.log(cart)
+            logger.info(cart)
             await fs.promises.writeFile(this.path, JSON.stringify(carts, null, '\t'), 'utf-8')
             
              return cart
 
         }catch (error) {
             cart.id = cart.length
-            console.log(error)
+            logger.error(error)
         }    
 
             
@@ -62,7 +63,7 @@ class CartDao {
                 return ('Not fount')
             }
         }catch(error){
-            console.log(error)
+            logger.error(error)
         }
     }
 
@@ -85,7 +86,7 @@ class CartDao {
                 return 'Carrito no encontrado';
             }
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 }

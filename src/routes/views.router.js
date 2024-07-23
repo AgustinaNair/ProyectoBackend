@@ -6,6 +6,7 @@ import CartMongoDao from '../daos/Dao/CartMongo.Dao.js'
 import { authorization } from '../middlewares/authorization.middleware.js';
 import { passportCall } from '../middlewares/passportCall.middleware.js';
 import { generarProducts } from '../utils/generarproducts.js';
+import { logger } from '../utils/logger.js';
 
 
 const productService = new ProductMongoManager
@@ -66,7 +67,7 @@ router.get('/chat', passportCall('jwt'), authorization('user'), (req,res)=>{
 router.get('/carts/:cid', async (req,res)=>{
     const{cid} = req.params
     const {carts} = await cartService.getCartById(cid)
-    console.log(carts)
+    logger.info(carts)
  
     res.render('carts', {
         carts, cid

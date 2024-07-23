@@ -10,6 +10,9 @@ import passport from 'passport'
 import { initializePassport } from './config/passport.config.js'
 import routerApp from './routes/index.js'
 import cors from 'cors'
+import { handleErrors } from './middlewares/errors/index.js'
+import { addLogger, logger } from './utils/logger.js'
+
 const app = express()
 const {port} = objectConfig
 // app.use (productSocket(io))
@@ -34,15 +37,15 @@ app.use(passport.session())
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', './src/views')
+app.use(addLogger)
 app.use(routerApp)
 app.use(cors())
 
 
 
-
 const httpServer =  app.listen(port, error =>{
-    if(error) console.log(error)
-    console.log('server escuchando en el puerto '+ port)})
+    if(error) logger.info(error)
+    logger.info('server escuchando en el puerto '+ port)})
 const io = new Server(httpServer)
 
 app.use((req,res, next)=>{
@@ -62,5 +65,4 @@ function chatSocket (){
 }
 chatSocket()
 
-
-
+app.use(handleErrors())

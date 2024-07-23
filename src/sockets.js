@@ -1,4 +1,5 @@
 import { v4 as uuid } from "uuid";
+import { logger } from "./utils/logger.js";
 
 let notes = [];
 const {getProduct, addProduct, getProductById, updateProduct, deleteProduct} = new ProductDao('./products.json')
@@ -6,24 +7,24 @@ const {getProduct, addProduct, getProductById, updateProduct, deleteProduct} = n
 export default (io) => {
   io.on("connection", (socket) => {
 
-    console.log("nuevo socket connectado:", socket.id);
+    logger.info("nuevo socket connectado:", socket.id);
 
     // Send all messages to the client
     socket.emit("server:loadnotes",  async(req, res) => {
         const result= await getProduct()
-        console.log(result)
+        logger.info(result)
         return result
     });
 
     socket.on("client:newnote", async(newNote) => {
       const result = await addProduct(newNote)
       io.emit("server:newnote", result);
-      console.log(result)
+      logger.info(result)
       return result
     });
 
     socket.on("client:deletenote", (noteId) => {
-      console.log(noteId);
+      logger.info(noteId);
       notes = notes.filter((note) => note.id !== noteId);
       io.emit("server:loadnotes", notes);
     });
@@ -45,7 +46,7 @@ export default (io) => {
     });
 
     socket.on("disconnect", () => {
-      console.log(socket.id, "disconnected");
+      logger.info(socket.id, "disconnected");
     });
   });
 };

@@ -2,6 +2,10 @@ import { userService, cartService } from "../service/index.js";
 import { createHash, isValidPassword } from "../utils/bcrypt.js";
 import { generateToken } from "../config/index.js";
 import UserCurrentDto from "../dtos/usersCurrent.dto.js";
+import { CustomError } from "../service/errors/CustomError.js";
+import { generateUserError } from "../service/errors/info.js";
+import { EError } from "../service/errors/enums.js";
+import { logger } from "../utils/logger.js";
 class SessionsController {
     constructor() {
         this.userService     = userService
@@ -18,10 +22,17 @@ class SessionsController {
         res.redirect('/products')
     }
 
-    registerSessions     =  async(req, res) => {
+    registerSessions     =  async(req, res, next) => {
         try{
             const{email, password, first_name, last_name, age} = req.body
-            if(!email || !password || !first_name || !last_name || !age) return res.status(401).send({status:'error', error:'faltan datos, completar campos'})
+            if(!email || !password || !first_name || !last_name || !age) {
+                CustomError.createError({
+                    name: 'Error al crear un usuario',
+                    cause: generateUserError( {first_name, last_name, email}),
+                    message: 'Error al crear un usuario',
+                    code: EError.INVALID_TYPES_ERROR
+                })
+            }
             const userExist = await this.userService.getUser({email})
             if(userExist) return res.send({status:'error', error:'usuario ya existe'})
             const cart = await this.cartService.addCart()
@@ -67,7 +78,7 @@ class SessionsController {
             }). send({status:'success', message: 'usuario registrado' })
     
         } catch (error){
-            console.log(error)
+            next(error)
         }
         
     }
@@ -95,7 +106,7 @@ class SessionsController {
     }
 
     failRegisterSessions = async (req,res) =>{
-        console.log('fallo el registro')
+        logger.info('fallo el registro')
         res.send({status:'error', error:'fallo el registro'})
     }
 

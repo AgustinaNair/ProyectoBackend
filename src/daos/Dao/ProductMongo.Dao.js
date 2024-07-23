@@ -1,3 +1,4 @@
+import { logger } from "../../utils/logger.js";
 import productsModel from "../models/products.model.js";
 
 import fs from 'fs'
@@ -14,7 +15,7 @@ class ProductMongoManager {
             const products = await productsModel.find()
             return products
         }catch(error){
-            console.log(error)
+            logger.error(error)
             return []
         }
     }
@@ -25,7 +26,7 @@ class ProductMongoManager {
 
             return products
         }catch(error){
-            console.log(error)
+            logger.error(error)
             return []
         }
     }
@@ -40,7 +41,7 @@ class ProductMongoManager {
             //  io.emit("server:newnote", product);
              return product
         }catch (error) {
-            console.log(error)
+            logger.error(error)
         }
         
     }
@@ -54,7 +55,7 @@ class ProductMongoManager {
                 return ('Not fount')
             }
         }catch(error){
-            console.log(error)
+            logger.error(error)
         }
     }
 
@@ -63,7 +64,7 @@ class ProductMongoManager {
             const result = await productsModel.updateOne({_id: pid}, {$set: {title, description, price, thumbnail, code, stock, category}})
             return result
         }catch(error){
-            console.log(error)
+            logger.error(error)
         }
     }
 
@@ -72,7 +73,7 @@ class ProductMongoManager {
             const products = await productsModel.findByIdAndDelete(pid)
             return products;
         } catch (error) {
-            console.log(error);
+            logger.error(error);
         }
     }
 

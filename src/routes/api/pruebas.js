@@ -4,6 +4,7 @@ import {fork} from 'child_process'
 import { sendEmail } from "../../utils/sendMail.js";
 import UserCurrentDto from "../../dtos/usersCurrent.dto.js";
 import { authorization } from "../../middlewares/authorization.middleware.js";
+import { logger } from "../../utils/logger.js";
 
 const router = Router()
 
@@ -14,6 +15,15 @@ const router = Router()
 //     }
 //     return result
 // }
+router.get('/loggerTest', (req, res) =>{
+    req.logger.fatal('Fatal!!')
+    req.logger.error('Error!!')
+    req.logger.warning('Alerta!!')
+    req.logger.info('Informacion!!')
+    req.logger.http('http!!')
+    req.logger.debug('debug!!')
+    res.send('Logs')
+})
 router.get('/suma', (req, res) =>{
     const result = operacioncompleja()
     res.send({result})
@@ -65,7 +75,7 @@ router.get ('/mail', async (req, res)=>{
             html: `Bienvenido ${user.first_name} ${user.last_name}`
         })
     } catch (error) {
-        console.log(error)
+        logger.error(error)
     }
     
     res.send('enviado')

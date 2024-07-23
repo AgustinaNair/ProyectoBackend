@@ -1,3 +1,5 @@
+import { logger } from "../../src/utils/logger.js"
+
 const socket = io()
 const input = document.getElementById('message')
 const messageList = document.getElementById('list-message')
@@ -32,7 +34,7 @@ socket.on('messages_server', data=>{
     data.forEach(message=>{
         messages += `<li>${message.user}: ${message.message}</li>`
     })
-    console.log(messages)
+    logger.info(messages)
     messageLog.innerHTML = messages
 })
 
