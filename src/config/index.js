@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import { program } from '../utils/commander.js'
 import jwt from 'jsonwebtoken'
 import { connect } from 'mongoose'
+import {MongoSingleton} from './mongoSingleton.js'
   
 const {mode} = program.opts()
 
@@ -20,7 +21,5 @@ export const objectConfig = {
     modo:             process.env.MODO
 } 
 export const connectDB = () => {
-    connect(process.env.MONGO_URL);
-    console.log('DB connected');
-};
+    MongoSingleton.getInstance(objectConfig.mongo_url)}
 export const generateToken = (user) => jwt.sign(user, process.env.PRIVATE_KEY, { expiresIn: '1d' })

@@ -15,14 +15,14 @@ Content-Type: application/json
     "category": "p"
 }
 ###
-GET http://localhost:8080/api/products/6642db164b80c58d9fd18431"
+GET http://localhost:8080/api/products/6642db164b80c58d9fd18431
 
 ###
 PUT http://localhost:8080/api/products/6642db164b80c58d9fd18431
 Content-Type: application/json
 
 {
-    "title": "producto 2",
+    "title": "producto 0",
     "description": "p",
     "price": 6,
     "code": "pp",
@@ -75,8 +75,8 @@ POST http://localhost:8080/api/sessions/login
 Content-Type: application/json
 
 {
-    "email": "juanpablo@gmail.com",
-    "password": "123456"
+    "email": "adminCoder@coder.com",
+    "password": "adminCod3r123"
 }
 
 ###

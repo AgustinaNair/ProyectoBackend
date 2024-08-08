@@ -12,10 +12,22 @@ import routerApp from './routes/index.js'
 import cors from 'cors'
 import { handleErrors } from './middlewares/errors/index.js'
 import { addLogger, logger } from './utils/logger.js'
-
+import swaggerUiExpress from 'swagger-ui-express'
+import swaggerJsdoc from 'swagger-jsdoc'
 const app = express()
 const {port} = objectConfig
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'Documentación de mi E-commerce',
+            description: 'Api detallada para documentar los modulos, productos y carrito'
+        }
+    },
+    apis: [`./src/docs/**/*.yaml`]
+}
 // app.use (productSocket(io))
+const specs = swaggerJsdoc(swaggerOptions)
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
@@ -31,11 +43,13 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+
 initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 app.set('views', './src/views')
 app.use(addLogger)
 app.use(routerApp)

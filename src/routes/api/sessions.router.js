@@ -9,6 +9,7 @@ const router = Router()
 const {
     githubSessions,
     githubCallSessions,
+    emailSessions,
     registerSessions,
     loginSessions,
     failRegisterSessions,
@@ -19,6 +20,7 @@ const {
 
 router.get('/github',         passport.authenticate('github', {scope: 'user:email'}), githubSessions)
 router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}), githubCallSessions)
+router.get('/email',          emailSessions)
 router.post('/register',      registerSessions)
 router.post('/login',         loginSessions)
 router.post('/failregister',  failRegisterSessions)
