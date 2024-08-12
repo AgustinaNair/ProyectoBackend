@@ -228,7 +228,7 @@ components:
           type: object
           description: Todos los productos del carrito
       example:
-        _id: ObjectId('whrisdd73374gegzvy')
+        _id: '663d08c69f705cc63996f3c7'
         products: []
 
   requestBodies:

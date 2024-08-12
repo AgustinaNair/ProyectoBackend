@@ -134,7 +134,7 @@ components:
           type: String
           description: Categoria del producto
       example:
-        _id: ObjectId('sdhjhisdd73374gegzvb')
+        _id: '6642db164b80c58d9fd18431'
         title: Iphone 14 pro max
         description: Celular ultima tecnologia, innovador y práctico
         price: 2000

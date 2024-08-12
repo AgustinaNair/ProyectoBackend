@@ -7,7 +7,7 @@ POST http://localhost:8080/api/products
 Content-Type: application/json
 
 {
-    "title": "producto 7",
+    "title": "producto 0",
     "description": "p",
     "price": 3,
     "code": "pp",
