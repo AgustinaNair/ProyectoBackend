@@ -1,25 +1,29 @@
-import { logger } from "../../src/utils/logger";
+// import { logger } from "../../src/utils/logger";
 
 // Initializers
 const socket = io()
 
 const botonesDelete = document.getElementsByClassName('miBotonDelete');
-const botonesAgregar = document.getElementsByClassName('miBotonAgregar');
+const botonesAgregar = document.querySelectorAll('.miBotonAgregar');
 
 
 // API calls
 const deleteProduct = async () => {
     let idDelBoton = event.target.id;
-    logger.info("producto borrado" + idDelBoton);
+    // logger.info("producto borrado" + idDelBoton);
     await fetch(`/api/products/${idDelBoton}`, {
         method: 'DELETE'
     });
    
 }
-const AddProduct = async () => {
+const AddProduct = async (event, cart) => {
+    const button = event.currentTarget;
+    console.log(button);
+    const cartId = button.dataset.id;
     let idDelBoton = event.target.id;
-    logger.info("agregando al carrito este producto: " + idDelBoton);
-    await fetch(`/api/carts/663d08c69f705cc63996f3c7/product/${idDelBoton}`, {
+    console.log("carrito " + cartId);
+    console.log(" este producto: " + idDelBoton);
+    await fetch(`/api/carts/${cartId}/product/${idDelBoton}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -29,6 +33,7 @@ const AddProduct = async () => {
     alert("El producto se ha agregado al carrito.");
         
 }
+
 for (let i = 0; i < botonesDelete.length; i++) {
     botonesDelete[i].addEventListener('click', deleteProduct);
 }
@@ -95,3 +100,6 @@ const parseDatafromForm = () => {
     return [noteForm, jsonData];
 }
 
+botonesAgregar.forEach(boton => {
+    boton.addEventListener('click', (event) => AddProduct(event));
+});

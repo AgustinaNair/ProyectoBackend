@@ -8,8 +8,8 @@ const {getProducts, getProduct, createProduct, updateProduct, deleteProduct} = n
 
 router.get('/',        getProducts)
 router.get('/:pid',    getProduct)
-router.post('/',       passportCall('jwt'), authorization('admin'), createProduct)
-router.put('/:pid',    passportCall('jwt'), authorization('admin'), updateProduct)
-router.delete('/:pid', passportCall('jwt'), authorization('admin'), deleteProduct)
+router.post('/',       passportCall('jwt'), authorization(['admin','premium']), createProduct)
+router.put('/:pid',    passportCall('jwt'), authorization(['admin','premium']), updateProduct)
+router.delete('/:pid', passportCall('jwt'), authorization(['admin','premium']), deleteProduct)
 
 export default router

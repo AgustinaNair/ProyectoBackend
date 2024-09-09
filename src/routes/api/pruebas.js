@@ -56,12 +56,12 @@ router.get('/session', (req, res) => {
         res.send('Bienvenido')
     }
 })
-router.get('/logout', (req, res) => {
-    req.session.destroy(err => {
-        if(!err) return res.send('session destruida')
-        else return res.send({status:'Error', error:err})
-    })
-})
+// router.get('/logout', (req, res) => {
+//     req.session.destroy(err => {
+//         if(!err) return res.send('session destruida')
+//         else return res.send({status:'Error', error:err})
+//     })
+// })
 router.get ('/mail', async (req, res)=>{
     try {
         const user = {

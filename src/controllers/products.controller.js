@@ -3,7 +3,7 @@ import { EError } from "../service/errors/enums.js"
 import { generateProductError } from "../service/errors/info.js"
 import { productService } from "../service/index.js"
 import { logger } from "../utils/logger.js"
-
+import { decodificaToken } from "../config/index.js"
 class ProductController {
     constructor(){
         this.service = productService
@@ -41,9 +41,18 @@ class ProductController {
                     code: EError.INVALID_TYPES_ERROR
                 })
             }
-            const result = await this.service.createProduct(req.body)
+            const token = req.cookies.token
+            const user = decodificaToken(token)
+            const userRole = user && user.role ? user.role : ''
+            const userId = user && user.id ? user.id : ''
+            if(userRole === 'premium'){
+                const result = await this.service.createProduct(req.body, userId)
+                res.send({status: 'success', payload: result})
+            }else{
+                const result = await this.service.createProduct(req.body)
+                res.send({status: 'success', payload: result})
+            }
             // req.io.emit('producto-agregado', result)
-            res.send({status: 'success', payload: result})   
         } catch (error) {
             next(error)
         }

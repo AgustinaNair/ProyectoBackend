@@ -23,3 +23,4 @@ export const objectConfig = {
 export const connectDB = () => {
     MongoSingleton.getInstance(objectConfig.mongo_url)}
 export const generateToken = (user) => jwt.sign(user, process.env.PRIVATE_KEY, { expiresIn: '1d' })
+export const decodificaToken = (token) => jwt.verify(token, process.env.PRIVATE_KEY)

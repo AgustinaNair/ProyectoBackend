@@ -7,7 +7,8 @@ const productsSchema = new Schema({
     price: Number,
     code: String,
     stock: Number,
-    category: String
+    category: String,
+    createBy: {type: Schema.Types.ObjectId, ref: 'users'}
 })
 
 productsSchema.plugin(mongoosePaginate)

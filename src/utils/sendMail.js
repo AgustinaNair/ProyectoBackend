@@ -14,13 +14,13 @@ const transport = nodemailer.createTransport({
 export const sendEmail = async ({email, subject, html}) => {
   return await transport.sendMail({
     from: 'Coder Test <agustinadesinano@gmail.com>',
-    to: gmail_user,
+    to: email,
     subject,
-    html,
-    attachments: [{
-      filename:'foto.jfif',
-      path: './src/utils/foto.jfif',
-      cid:'foto'
-    }]
+    html
+    // attachments: [{
+    //   filename:'foto.jfif',
+    //   path: './src/utils/foto.jfif',
+    //   cid:'foto'
+    // }]
   })
 }

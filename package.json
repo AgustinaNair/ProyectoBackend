@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/carts.test.js --mode development",
+    "test": "mocha test/hand.test.js --mode development",
     "start": "nodemon src/app.js --mode production",
     "dev": "nodemon src/app.js --mode development",
     "start:dev": "nodemon src/app.js --mode development "
@@ -15,7 +15,9 @@
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@nestjs/mongoose": "^10.0.10",
     "bcrypt": "^5.1.1",
+    "chai": "^5.1.1",
     "commander": "^12.1.0",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.6",

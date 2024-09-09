@@ -4,6 +4,7 @@ import { EError } from "../service/errors/enums.js"
 import { generateCartError, generateProductError } from "../service/errors/info.js"
 import { cartService } from "../service/index.js"
 import { logger } from "../utils/logger.js"
+import { decodificaToken } from "../config/index.js"
 
 class CartController {
     constructor(){
@@ -73,7 +74,7 @@ class CartController {
     deleteProductCart =async (req, res) =>{
         try {
             const { cid, pid } = req.params;
-            const result = await this.cartService.deleteproduct(cid, pid);
+            const result = await this.cartService.deleteProduct(cid, pid);
             res.send({status:'success', payload: result})        
         } catch (error) {
             logger.error(error)
@@ -90,13 +91,15 @@ class CartController {
         }
     }
     buyCart = async(req, res)=>{
-        logger.info(error)(req.user)
         try {
+            const token = req.cookies.token
+            const user = decodificaToken(token)
+            const userEmail = user && user.email ? user.email : ''
             const { cid } = req.params;
-            const result = await this.cartService.buyCart(cid);
+            const result = await this.cartService.buyCart(cid, userEmail);
             res.send({status:'success', payload: result})
         } catch (error) {
-            logger.error(error)(error)
+            logger.error(error)
         }
                     
     }   

@@ -9,6 +9,6 @@ export default class CartRepository{
     updateTodoCart = async (cid, products)  => await this.cartDao.updateTodoCart(cid, products)
     deleteProduct = async(cid, pid) => await this.cartDao.deleteProduct(cid, pid)
     deleteTodosLosProduct = async(cid) => await this.cartDao.deleteTodosLosProduct(cid)
-    buyCart = async(cid) => await this.cartDao.buyCart(cid)
+    buyCart = async(cid, email) => await this.cartDao.buyCart(cid, email)
 }
 

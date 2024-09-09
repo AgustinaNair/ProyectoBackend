@@ -1,0 +1,27 @@
+<main>
+    <h1>Cargar archivos para que {{uid}} sea un user premium</h1>
+    
+    <h2>Imagen de perfil</h2>
+    <form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data">
+        <label for="profile">Seleccionar:</label>
+        <input type="file" name="profiles" accept="image/*" required><br><br>
+        <button type="submit">Listo</button>
+    </form>
+    
+    <h2>Imagenes de productos</h2>
+    <form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data">
+        <label for="products">Seleccionar:</label>
+        <input type="file" name="products" accept="image/*"><br><br>
+        <button type="submit">Listo</button>
+    </form>
+    
+    <h2>Documentos de usuario</h2>
+    <form action="/api/users/{{uid}}/documents" method="POST" enctype="multipart/form-data">
+        {{!-- <label for="name">Nombre del documento:</label>
+        <input type="text" name="name" required><br><br> --}}
+        <label for="documents">Seleccionar:</label>
+        <input type="file" name="documents" id="documents" multiple>
+        <br><br>
+        <button type="submit" value="Upload files">Listo</button>
+    </form>
+</main>

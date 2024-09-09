@@ -5,6 +5,7 @@ import { productService, ticketService } from "../../service/index.js";
 import { CustomError } from "../../service/errors/CustomError.js";
 import { generateCartError } from "../../service/errors/info.js";
 import { logger } from "../../utils/logger.js";
+import { sendEmail } from "../../utils/sendMail.js";
 
 
 
@@ -18,9 +19,9 @@ class CartDaoManager {
 
     getCartById = async (cid) => {
         try{
-            const carts = await cartsModel.findOne({_id: cid}).lean()
+            const cart = await cartsModel.findOne({_id: cid}).lean()
 
-            return carts
+            return cart
         }catch(error){
             logger.error(error)
             return []
@@ -148,12 +149,14 @@ class CartDaoManager {
         const result = await cartsModel.updateOne({_id: cartId}, {$set: {products: []}}, {new:true})
         return result
     }
-    buyCart = async(cid) =>{
+    buyCart = async(cid, email) =>{
         try {
             let cart = await cartsModel.findById(cid);
             if (!cart) {
                 throw new Error('El carrito no existe')
             }   
+            console.log('carrito:'+ cid)
+            console.log('email:'+ email)
             let newCart = []
             let carritoComprado = []
             let precioTotal = 0
@@ -185,11 +188,48 @@ class CartDaoManager {
 
             });
             logger.info('El carrito quedo asi:' + newCart)
-            await this.updateTodoCart(cid, newCart)
-            await ticketService.createTicket({
-                amount: precioTotal,
-                purchaser: 'usuario@yahoo.cjc'
-            })
+            if (precioTotal === 0){
+                console.log('No tienes productos o no hay stock de lo elegido')
+                await sendEmail({
+                    email,
+                    subject: 'Compra no realizada',
+                    html: `
+                    <div>
+                        <h1>No hay stock de los productos elegidos</h1>
+                    </div>
+                    `
+                })
+                
+            } else{
+                await this.updateTodoCart(cid, newCart)
+                const ticketlisto = await ticketService.createTicket({
+                    amount: precioTotal,
+                    purchaser: email
+                })
+                const opciones = {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    timeZoneName: 'short'
+                };
+                const fechaLegible = ticketlisto.purchase_datetime.toLocaleDateString('es-ES', opciones)
+                
+                await sendEmail({
+                    email,
+                    subject: 'Compra realizada',
+                    html: `
+                    <div>
+                        <h1>Genial, acabas de realizar una compra </h1>
+                        <p>Fecha de compra: ${fechaLegible}
+                        Monto total: ${ticketlisto.amount}</p>
+                    </div>
+                    `
+                }) 
+            }
+            
             return carritoComprado;
 
         } catch (error) {

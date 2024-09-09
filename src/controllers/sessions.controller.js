@@ -1,6 +1,6 @@
 import { userService, cartService } from "../service/index.js";
 import { createHash, isValidPassword } from "../utils/bcrypt.js";
-import { generateToken } from "../config/index.js";
+import { generateToken, decodificaToken } from "../config/index.js";
 import UserCurrentDto from "../dtos/usersCurrent.dto.js";
 import { CustomError } from "../service/errors/CustomError.js";
 import { generateUserError } from "../service/errors/info.js";
@@ -13,6 +13,7 @@ class SessionsController {
         this.createHash      = createHash
         this.isValidPassword = isValidPassword
         this.generateToken   = generateToken
+        this.decodificaToken = decodificaToken
     }
 
     githubSessions       = async (req, res)=>{}
@@ -100,6 +101,8 @@ class SessionsController {
             }
                     
             const result = await this.userService.createUser(newUser)
+            const fecha = Date.now()
+            await this.userService.conexionUser(email, fecha)  
             const token = this.generateToken({
                 email,
                 id: result._id
@@ -122,13 +125,17 @@ class SessionsController {
         if(!result) return res.status(401).send({status:'error', error:'Usuario incorrecto'})
     
         if(!this.isValidPassword({password :result.password}, password)) return res.status(401).send({status:'error', error:'password incorrecto'})
+
+        const fecha = Date.now()
+        await this.userService.conexionUser(email, fecha)           
         
         const token = this.generateToken({
             email,
             first_name: result.first_name,
             last_name: result.last_name,
             id: result._id,
-            role: result.role
+            role: result.role,
+            cartId: result.cartId
         })
         
         res.cookie('token', token, {
@@ -152,7 +159,12 @@ class SessionsController {
         res.send(userDto)
     }
 
-    logoutSessions       = (req, res) => {
+    logoutSessions       = async(req, res) => {
+        const tokenviejo = this.decodificaToken(req.cookies.token)
+
+        const fecha = Date.now()
+        console.log(tokenviejo)
+        await this.userService.conexionUser(tokenviejo.email, fecha)
         const token = this.generateToken({
             role: 'Sin Logearse'
         })
@@ -164,7 +176,6 @@ class SessionsController {
             if(!err) return res.render('login')
             else return res.send({status:'Error', error:err})
         })
-        
     }
 }
 

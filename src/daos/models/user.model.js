@@ -23,9 +23,17 @@ const userSchema = new Schema({
     role: {
         type: String,
         default: 'user'
+    },
+    documents: {
+        type:[{
+            name: String, 
+            reference: String 
+        }]
+    },
+    last_connection: { 
+        type: Date
     }
 })
-// odm 
 
 userSchema.plugin(mongoosePaginate)
 

@@ -1,9 +1,12 @@
 <main>
 
-    <div class="d-flex justify-content-evenly">
+    <div class="d-flex justify-content-evenly flex-column align-items-center">
         <h1> Te damos la bienvenida {{user}}</h1>
         {{#if userExist}}
-            <a href="/api/sessions/logout" class="btn btn-outline-primary w-25">Cerrar sesión</a>
+            <div class="d-flex justify-content-between w-50">
+                <a href="/api/sessions/logout" class="btn btn-outline-primary w-55">Cerrar sesión</a>
+                <a href="/cart/{{cart}}" class="btn btn-outline-primary w-55">Mi carrito</a>
+            </div>
         {{/if}}
     </div>
     <div class="container h-100">
@@ -12,7 +15,7 @@
                         <div class="d-flex justify-content-between">
                             <h1 class="card-title h3">{{this.title}}</h1> 
                             <div>
-                                <button class="btn btn-secondary  miBotonAgregar" id={{this.id}} data-id={{this.id}}>Agregar al carrito</button>
+                                <button class="btn btn-secondary  miBotonAgregar" id={{this.id}} data-id={{../cart}} >Agregar al carrito</button>
                                 {{!-- <button class="btn btn-secondary update" onclick="updateProduct(${product.id})" data-id={{this.id}}>update</button> --}}
                             </div>
                         </div>

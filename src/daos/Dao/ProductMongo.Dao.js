@@ -31,13 +31,26 @@ class ProductMongoManager {
         }
     }
         
-    addProduct = async product => {
+    addProduct = async (product, user) => {
 
         if (!product.title || !product.description || !product.price || !product.code || !product.stock){
             throw new Error("Faltan parámetros")     
         } 
         try{
-            const addProduct = await productsModel.create(product)
+            if (!mongoose.Types.ObjectId.isValid(user)) {
+                console.log("ID de usuario no es válido: " + user);
+            }
+            const userId = mongoose.Types.ObjectId(user);
+            console.log(userId)
+            const addProduct = await productsModel.create({
+                title: product.title,
+                description: product.description,
+                price: product.price,
+                code: product.code,
+                stock: product.stock,
+                category: product.category,
+                createBy: userId
+            })
             //  io.emit("server:newnote", product);
              return product
         }catch (error) {

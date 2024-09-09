@@ -1,0 +1,33 @@
+<main>
+
+    <div class="d-flex justify-content-evenly">
+        <h1> Hola administrador</h1>
+    </div>
+    <div class="container h-100">
+                {{#each users}}
+                    <div class="card card-body rounded-0 animate__animated animate__fadeInUp mb-2 ">
+                        <div class="d-flex justify-content-between">
+                            <h1 class="card-title h3">{{this.first_name}}</h1> 
+                            <div>
+                                <button class="btn btn-secondary  miBotonRole"  onclick="cambiaRole('{{this._id}}')"  id={{this._id}} data-id={{this._id}}>'Modificar rol'</button>
+                                <button class="btn btn-secondary " onclick="eliminar('{{this._id}}')" data-id={{this.id}}>Eliminar usuario</button>
+                            </div>
+                        </div>
+                        <div>
+                            <p>Email:{{this.email}}</p>
+                            <p>role:{{this.role}}</p>
+                            <p>last_connection:{{this.last_connection}}</p>
+                        </div>
+                    </div>
+                {{/each}}
+
+                
+            </div>
+        <div>
+    </div>
+
+</main>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/users.js"></script>

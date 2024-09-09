@@ -1,0 +1,23 @@
+
+<main>
+    <div class="container h-100">
+        <h1>Cart: {{cid}}</h1>
+
+        {{#each products}}
+            <div class="card card-body rounded-0 animate__animated animate__fadeInUp mb-2 ">
+                <div class="d-flex justify-content-between">
+                    <h1 class="card-title h3 titulo">{{this.product.title}}</h1> 
+                </div>
+                <div>
+                    <p>{{this.product.description}}</p>
+                    <p>Cantidad:{{this.quantity}}</p>
+                </div>
+                
+            </div>        
+        {{/each}}
+        <button class="btn btn-secondary  miBotonEliminar"  data-id={{cid}} >Vaciar carrito</button>
+        <button class="btn btn-secondary  miBotonComprar"  data-id={{cid}} >Comprar todo</button>
+    </div>
+</main>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../js/cart.js"></script>

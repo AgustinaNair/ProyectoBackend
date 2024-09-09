@@ -1,8 +1,10 @@
-export const authorization = role =>{
+export const authorization = roles =>{
     // console.log(req.user)
     return (req, res, next) =>{
-       if(!req.user) return res.status(401).send("Unauthorized")
-        if(req.user.role !== role) return res.status(401).send("No estas autorizado")
+        if(!req.user) return res.status(401).send("Unauthorized")
+        if (!roles.includes(req.user.role)) {
+            return res.status(401).send("No estás autorizado");
+        }
         next()
     }
 }

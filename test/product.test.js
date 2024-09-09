@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import ProductMongoManager from "../src/daos/Dao/ProductMongo.Dao.js";
+// import ProductMongoManager from "../src/daos/Dao/ProductMongo.Dao.js";
 import Asserts from "assert";
+import { productService } from "../src/service/index.js";
 
 mongoose.connect('mongodb+srv://agustinadesinano:quebuenacontraseña@cluster0.b2cdbfu.mongodb.net/ecommercee')
 
@@ -8,7 +9,7 @@ const assert = Asserts.strict
 
 describe('Test product dao', () =>{
     before(function(){
-        this.productDao = new ProductMongoManager()
+        this.productDao = productService
     })
     beforeEach (function(){
         // con esto eliminas la base de datos para hacer siempre la misma prueba 
@@ -17,7 +18,7 @@ describe('Test product dao', () =>{
     })
     it('El dao debe obtener los products en formato arreglo', async function() {
         //las acciones a ejecutar
-        const result = await this.productDao.getTodosProducts()
+        const result = await this.productDao.getProducts()
         assert.strictEqual(Array.isArray(result), true)
     })
     it('El dao debe agregar un producto correctamente a la base de datos', async function() {

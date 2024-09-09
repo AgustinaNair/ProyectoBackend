@@ -49,7 +49,7 @@ Content-Type: application/json
 }
 
 ### actualizar carrito 
-PUT http://localhost:8080/api/carts/668d3d1f34c8afd686cd5ed3
+PUT http://localhost:8080/api/carts/6684afb1ebaaa9f56a805c32
 Content-Type: application/json
 
 [
@@ -64,11 +64,11 @@ Content-Type: application/json
     "quantity": 1
 }
 ###
-DELETE http://localhost:8080/api/carts/663d08c69f705cc63996f3c7/product/6642db1a4b80c58d9fd18433
+DELETE http://localhost:8080/api/carts/6684afb1ebaaa9f56a805c32/product/6642db1a4b80c58d9fd18433
 ###
-DELETE http://localhost:8080/api/carts/663d08c69f705cc63996f3c7
+DELETE http://localhost:8080/api/carts/6684afb1ebaaa9f56a805c32
 ### comprar carrito
-PUT http://localhost:8080/api/carts/668d3d1f34c8afd686cd5ed3/purchase
+PUT http://localhost:8080/api/carts/6684afb1ebaaa9f56a805c32/purchase
 
 ### SESSIONS
 POST http://localhost:8080/api/sessions/login
@@ -91,7 +91,14 @@ Content-Type: application/json
 }
 
 ### 
-GET http://localhost:8080/pruebas/logout
+GET http://localhost:8080/api/sessions/logout
 
 ###
 GET http://localhost:8080/api/sessions/current
+
+### Users
+
+GET http://localhost:8080/api/users
+
+###
+DELETE http://localhost:8080/api/users
