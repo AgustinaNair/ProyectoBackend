@@ -1,12 +1,14 @@
 import { CustomError } from "../service/errors/CustomError.js"
 import { EError } from "../service/errors/enums.js"
 import { generateProductError } from "../service/errors/info.js"
-import { productService } from "../service/index.js"
+import { productService, userService } from "../service/index.js"
 import { logger } from "../utils/logger.js"
 import { decodificaToken } from "../config/index.js"
+import { sendEmail } from "../utils/sendMail.js"
 class ProductController {
     constructor(){
         this.service = productService
+        this.userService = userService
     }
 
     getProducts   = async(req, res) => {
@@ -81,6 +83,15 @@ class ProductController {
     deleteProduct = async(req,res) =>{
         try {
         const {pid} = req.params
+        const product = await this.service.getProductById(pid)
+        if (product.createBy){
+            const userCreador = await this.userService.getUser(product.createBy)
+            sendEmail({
+                email: userCreador.email,
+                subject: 'Producto eliminado',
+                html: `Hola ${userCreador.first_name} lamento informarle que su producto "${product.title}" a sido eliminado`
+            })
+        }
         const result = await this.service.deleteProduct(pid)
         // req.io.emit('producto-eliminado', result)
         res.send({status:'success', payload: result})            

@@ -8,7 +8,7 @@ const {getCart, createCart, addProductCart, updateCart, updateProductCart, delet
 
 router.get('/:cid',                 getCart)
 router.post('/',                    createCart)
-router.post('/:cid/product/:pid',   passportCall('jwt'), authorization('user'),addProductCart)
+router.post('/:cid/product/:pid',   passportCall('jwt'), authorization(['user', 'premium']),addProductCart)
 router.put('/:cid',                 updateCart)
 router.put('/:cid/product/:pid',    updateProductCart)
 router.delete('/:cid/product/:pid', deleteProductCart)

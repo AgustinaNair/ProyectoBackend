@@ -37,11 +37,13 @@ class ProductMongoManager {
             throw new Error("Faltan parámetros")     
         } 
         try{
-            if (!mongoose.Types.ObjectId.isValid(user)) {
-                console.log("ID de usuario no es válido: " + user);
-            }
-            const userId = mongoose.Types.ObjectId(user);
-            console.log(userId)
+            
+            // if (!mongoose.Types.ObjectId.isValid(user)) {
+            //     console.log("ID de usuario no es válido: " + user);
+            // }
+            console.log('aca esta todo bien')
+            // const userId = mongoose.Types.ObjectId(user);
+            // console.log(userId)
             const addProduct = await productsModel.create({
                 title: product.title,
                 description: product.description,
@@ -49,7 +51,7 @@ class ProductMongoManager {
                 code: product.code,
                 stock: product.stock,
                 category: product.category,
-                createBy: userId
+                createBy: user
             })
             //  io.emit("server:newnote", product);
              return product
