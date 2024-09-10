@@ -15,7 +15,7 @@ import { addLogger, logger } from './utils/logger.js'
 import swaggerUiExpress from 'swagger-ui-express'
 import swaggerJsdoc from 'swagger-jsdoc'
 const app = express()
-const {port} = objectConfig
+const {port} = objectConfig || 8080
 const swaggerOptions = {
     definition: {
         openapi: '3.0.1',
