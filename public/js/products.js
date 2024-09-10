@@ -99,7 +99,3 @@ const parseDatafromForm = () => {
 
     return [noteForm, jsonData];
 }
-
-botonesAgregar.forEach(boton => {
-    boton.addEventListener('click', (event) => AddProduct(event));
-});
